@@ -16,8 +16,8 @@ R package, ggvita, is developed for visualization of tree alignment results. The
 
 ```
 install.packages("devtools")  
-install_github("helloicyvodka/ggVITA")  
-library(ggVITA)  
+install_github("helloicyvodka/ggvita")  
+library(ggvita)  
 ```
 
 ### Method 2:
