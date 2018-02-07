@@ -56,7 +56,7 @@ pp
 ```
 This is an example of PHA-4 gene expression.
 
-###**Generally %+ggvita% is highly recommended than + !**
+#### **Generally %+ggvita% is highly recommended than + !**
 
 Note that ggvita has compatibility with ggtree and ggplot2 system.  However, when you need to add theme_* to ggvita object, use "%+ggvita%" instead.
 
