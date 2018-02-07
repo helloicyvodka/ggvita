@@ -1,5 +1,5 @@
 
-# ggVITA (visualization of tree alignments)
+# ggvita (visualization of tree alignments)
 
 #### Sun Yat-sen University, Evolution and Genomics Function Lab, Chen&Yang Lab
 #### Author : Yang Jianrong, Yuan Meng
