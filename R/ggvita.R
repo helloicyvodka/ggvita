@@ -27,6 +27,7 @@ ggvita <- function(one_result,
                    tip_size = 0.5,
                    tiplab_size = 0.1,
                    print = F,
+                   show.pruned=T,
 
                    mapping        = NULL,
                    layout         = "rectangular",
@@ -52,6 +53,7 @@ ggvita.alml<- function(one_result,
                        tip_size = 0.5,
                        tiplab_size = 0.1,
                        print = F,
+                       show.pruned=T,
 
                        mapping        = NULL,
                        layout         = "rectangular",
@@ -148,6 +150,8 @@ ggvita.alml<- function(one_result,
     }
   }
 
+
+
   for(i in matched_S_and_T){
     dt_T[dt_T$node.seq==i$mtT,"y"]<-dt_S[dt_S$node.seq==i$mtS,"y"]
   }
@@ -199,6 +203,7 @@ ggvita.alml<- function(one_result,
 
 
 
+
   ###############################
   ## put two tree together and color the tips by tissue classes
 
@@ -220,6 +225,19 @@ ggvita.alml<- function(one_result,
   trS$data$colorlabel<-labellist2[trS$data$label]
   trT$data$colorlabel<-labellist2[trT$data$label]
 
+
+
+
+
+
+
+
+
+
+
+
+
+
   oldw <- getOption("warn")
   options(warn = -1)
 
@@ -228,15 +246,88 @@ ggvita.alml<- function(one_result,
     geom_tippoint(size=tip_size,aes(fill=I(colorlabel)),shape=21,color="NA")+
     geom_tiplab(align = T,size=tiplab_size)+
     ggtitle(paste0("score_order:",one_result$score_order,"  ","score: ",one_result$Score))
+
+
+
+
+
   ggT<-trT+
     geom_tippoint(size=tip_size,aes(fill=I(colorlabel)),shape=21,color="NA")+
     geom_tiplab(align = T,size=tiplab_size,hjust =1 )+
     ggtitle(paste0("RootS:",one_result$RootS,"  ","RootT:",one_result$RootT))
 
+
+
+
+
+
+    # Find the parent and annotation the parent
+
+    trS_parent_of_pruned<-filter(trS$data,
+                                 node %in%
+                                   trS$data[trS$data$group==1,]$parent)
+
+
+
+    trT_parent_of_pruned<-filter(trT$data,
+                                 node %in%
+                                   trT$data[trT$data$group==1,]$parent)
+
+    # Collapse the pruned nodes
+
+    ggS$data<-filter(ggS$data,group==0)
+    ggT$data<-filter(ggT$data,group==0)
+
+    # trS$data[trS$data$group==1,]$x<-NA
+    # trS$data[trS$data$group==1,]$y<-NA
+    # trT$data[trS$data$group==1,]$x<-NA
+    # trT$data[trS$data$group==1,]$y<-NA
+
+
+  if(show.pruned==T){
+
+      ggS<-ggS+geom_point(data=trS_parent_of_pruned,
+                 mapping=aes(x,
+                             y
+                             #size=log10(15-x)
+                 ),
+                 color="red",
+                 size=0.5
+      )
+
+
+
+    ggT<-ggT+geom_point(data=trT_parent_of_pruned,
+                 mapping=aes(x,
+                             y
+                             #size=log10(15-x)
+                 ),
+                 color="red",
+                 size=0.5
+      )
+
+  }
+
+
+
+
+
+
   attr(ggS,"SorT")<-"S"
   attr(ggT,"SorT")<-"T"
 
+
+
+
   options(warn = oldw)
+
+
+
+
+
+
+
+
 
 
 
@@ -249,8 +340,24 @@ ggvita.alml<- function(one_result,
   )
 
 
+
+
+
+
+
+
+
+
+
+
+
+
   if(print==T){return((this_result))}
   else {return(invisible(this_result))}
+
+
+
+
 }
 
 
