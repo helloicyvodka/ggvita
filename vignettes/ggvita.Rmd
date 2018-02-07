@@ -2,11 +2,11 @@
 title: 'ggvita: Visualization for Tree Alignment'
 author: "Jianrong Philip Yang, Meng Yuan, Xiaolong Cao"
 date: '2017-10-10'
-output:
-  html_document: default
-  pdf_document: default
-vignette: |
-  %\VignetteIndexEntry{Vignette Title} %\VignetteEngine{knitr::rmarkdown} %\VignetteEncoding{UTF-8}
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 R package, ggvita, is developed for visualization of tree alignment results. These results connect genotypes with phenotypes during a binary-tree development, from single cell ( usually zygote ) to multiple cells. Pro. Jianrong Philip Yang designed an algorithm to calculate the similarity between trees, in Sun Yat-sen University, Guang Zhou. This algorithm can dectect tree similar phenotypes at the sub tree scale. When we connect both genotypes and phenotypes of livings, we can observe some interesting phenomena and find out the biology mechanisms behind them. geom_EPIC function can add expression levels of genes from EPIC (http://epic.gs.washington.edu/) on the branches of trees alignment results.
@@ -19,7 +19,7 @@ R package, ggvita, is developed for visualization of tree alignment results. The
 ## Local alignment 
 
 * Read the alm file. 
-```{r, echo=TRUE,message=TRUE, warning=FALSE}
+```
 library(ggvita)
 the_alm_file <- "~/2017-2018/tree/ggtree_align/data/fun.alm"
 readal.alm(the_alm_file)
@@ -29,7 +29,7 @@ This will create `alm_label` in your environment automately.
 
 * Read the alml file into a list. 
 
-```{r, echo=TRUE,message=TRUE, warning=FALSE}
+```
 the_alml_file <- "~/2017-2018/tree/ggtree_align/data/fun.alml"
 the_alml <- readal.alml (the_alml_file)
 ```
@@ -37,7 +37,7 @@ This list will contain the results of alml.
 
 * ggvita. This will only show the tree alignment result with phenotypes of terminal tips on treeS and treeT.
 
-```{r, echo=TRUE,message=TRUE, warning=FALSE}
+```
 p <- ggvita(the_alml$`1`, print=F)
 p
 ```
@@ -48,7 +48,7 @@ p
   
 * geom_EPIC. This will show the tree alignment result with both genotype and phenotype of treeS and treeT.
 
-```{r, echo=TRUE,message=TRUE, warning=FALSE}
+```{r, eval=FALSE, message=TRUE, warning=FALSE, include=FALSE}
 
 the_EPIC_expr_file <- "~/2017-2018/Predict_expr/data/epic/epic_data/CD20061215_pha4I2L_11.csv"
 pp <- p %+ggvita% geom_EPIC(the_EPIC_expr_file,mc.cores=20)
@@ -60,18 +60,18 @@ This is an example of PHA-4 gene expression.
 
 Note that ggvita has compatibility with ggtree and ggplot2 system.  However, when you need to add theme_* to ggvita object, use "%+ggvita%" instead.
 
-```{r, echo=TRUE, message=TRUE, warning=FALSE}
+```
 library(ggplot2)
 pp %+ggvita% theme_bw() 
 
 ```
-```{r, echo=TRUE,message=TRUE, warning=FALSE}
+```
 pp+geom_vline(xintercept = 5,color="red")
 
 ```
 
 
-```{r, echo=TRUE,message=TRUE, warning=FALSE}
+```
 pp %+ggvita%
   geom_vline(xintercept = 5,color="red") %+ggvita% 
   theme_dark() %+ggvita% 
