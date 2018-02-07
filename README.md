@@ -2,7 +2,7 @@
 # ggvita (visualization of tree alignments)
 
 #### Sun Yat-sen University, Evolution and Genomics Function Lab, Chen&Yang Lab
-#### Author : Yang Jianrong, Yuan Meng
+#### Author : Yang Jianrong, Yuan Meng, Xiaolong Cao
 #### Date : 2017-10-10
 
 
