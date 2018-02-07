@@ -1,8 +1,4 @@
----
-output:
-  pdf_document: default
-  html_document: default
----
+
 # ggVITA (visualization of tree alignments)
 
 #### Sun Yat-sen University, Evolution and Genomics Function Lab, Chen&Yang Lab
