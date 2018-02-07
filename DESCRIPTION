@@ -17,14 +17,14 @@ License: Artistic-2.0
 Encoding: UTF-8
 LazyData: true  
 Imports:
-  data.table,
-  dplyr,
+  data.table(>=1.10.4-2),
+  dplyr(>=0.7.4),
   ggplot2 (>= 2.2.0),
-  ggtree,
-  magrittr, 
-  plyr,
-  pipeR,
-  rlist
+  ggtree(>=1.8),
+  magrittr(>=1.5), 
+  plyr(>=1.8.4),
+  pipeR(>=0.1.6.3),
+  rlist(>=0.4.6.1)
 Suggests:
   knitr (>= 0.1.0),
   testthat,
