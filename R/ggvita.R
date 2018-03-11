@@ -7,6 +7,8 @@
 #' @param layout one of 'rectangular', 'slanted', 'fan', 'circular', 'radial', 'equal_angle' or 'daylight'.
 #' @param brach_size branch size, default is 0.2.
 #' @param tip_size tip size, default is 0.5.
+#' @param show.pruned.node default is TRUE, which showes the parent of the pruned node with a red point.
+#' @param show.pruned.line default is TRUE, which showes the pruned lines in type of "---".
 #' @param tiplab_size tip label size, default is 0.1.
 #' @param print Logical. If TRUE, then the alml result is printed. Otherwise, not.
 #' @param ... same as the function ggtree attributes. See it by help(ggtree).
@@ -27,7 +29,8 @@ ggvita <- function(one_result,
                    tip_size = 0.5,
                    tiplab_size = 0.1,
                    print = F,
-                   show.pruned=T,
+                   show.pruned.node=T,
+                   show.pruned.line=T,
 
                    mapping        = NULL,
                    layout         = "rectangular",
@@ -53,7 +56,8 @@ ggvita.alml<- function(one_result,
                        tip_size = 0.5,
                        tiplab_size = 0.1,
                        print = F,
-                       show.pruned=T,
+                       show.pruned.node=T,
+                       show.pruned.line=T,
 
                        mapping        = NULL,
                        layout         = "rectangular",
@@ -179,15 +183,15 @@ ggvita.alml<- function(one_result,
 
     if(i$isTip==T & filter(dt_T,node.seq==sister.seq)$isTip==T){
       if(substr(i$node.seq,nchar(i$node.seq),nchar(i$node.seq))=="0"){
-        dt_T[dt_T$node.seq==i$node.seq,"y"]<- dt_T[dt_T$node.seq==i$parent.seq,"y"]-0.35
+        dt_T[dt_T$node.seq==i$node.seq,"y"]<- dt_T[dt_T$node.seq==i$parent.seq,"y"]-0.5
       }else{
-        dt_T[dt_T$node.seq==i$node.seq,"y"]<- dt_T[dt_T$node.seq==i$parent.seq,"y"]+0.35
+        dt_T[dt_T$node.seq==i$node.seq,"y"]<- dt_T[dt_T$node.seq==i$parent.seq,"y"]+0.5
       }
     }else{
       if(substr(i$node.seq,nchar(i$node.seq),nchar(i$node.seq))=="0"){
-        dt_T[dt_T$node.seq==i$node.seq,"y"]<-subtips_y_floor-0.35
+        dt_T[dt_T$node.seq==i$node.seq,"y"]<-subtips_y_floor-0.5
       }else{
-        dt_T[dt_T$node.seq==i$node.seq,"y"]<-subtips_y_ceiling+0.35
+        dt_T[dt_T$node.seq==i$node.seq,"y"]<-subtips_y_ceiling+0.5
       }
     }
 }
@@ -273,40 +277,7 @@ ggvita.alml<- function(one_result,
                                  node %in%
                                    trT$data[trT$data$group==1,]$parent)
 
-    # Collapse the pruned nodes
 
-    ggS$data<-filter(ggS$data,group==0)
-    ggT$data<-filter(ggT$data,group==0)
-
-    # trS$data[trS$data$group==1,]$x<-NA
-    # trS$data[trS$data$group==1,]$y<-NA
-    # trT$data[trS$data$group==1,]$x<-NA
-    # trT$data[trS$data$group==1,]$y<-NA
-
-
-  if(show.pruned==T){
-
-      ggS<-ggS+geom_point(data=trS_parent_of_pruned,
-                 mapping=aes(x,
-                             y
-                             #size=log10(15-x)
-                 ),
-                 color="red",
-                 size=0.5
-      )
-
-
-
-    ggT<-ggT+geom_point(data=trT_parent_of_pruned,
-                 mapping=aes(x,
-                             y
-                             #size=log10(15-x)
-                 ),
-                 color="red",
-                 size=0.5
-      )
-
-  }
 
 
 
@@ -322,6 +293,50 @@ ggvita.alml<- function(one_result,
   options(warn = oldw)
 
 
+  ddS<-the_toPlot$treeS$nodes_order
+  ddT<-the_toPlot$treeT$nodes_order
+
+  names(ddS)[4]<-"node"
+  names(ddT)[4]<-"node"
+
+
+  ggS$data<-merge(ggS$data,ddS[,-c(2,5,6)],by="node")
+  ggT$data<-merge(ggT$data,ddT[,-c(2,5,6)],by="node")
+
+
+  ## Collapse the pruned nodes
+
+  ggS$data2<-ggS$data
+  ggT$data2<-ggT$data
+
+  if(show.pruned.line==F){
+
+    ggS$data<-ggS$data[ggS$data$group==0,]
+    ggT$data<-ggT$data[ggT$data$group==0,]
+    # change the y to the same scale
+
+
+
+    recale_from_bottom<-function(dtS,scale_width=1){
+      dtS[dtS$isTip=="TRUE",]$y<-rank(dtS[dtS$isTip=="TRUE",]$y)*scale_width
+
+      for(i in max(dtS$x,na.rm = T):1){
+        for(i2 in 1:nrow(dtS)){
+          if(is.na(dtS[i2,]$x)){
+            next
+          }else if(dtS[i2,]$x==i){
+            if(dtS[i2,]$isTip=="FALSE"){
+              dtS[i2,]$y<-mean(dtS[dtS$parent==dtS[i2,]$node,]$y,na.rm = T)
+            }
+          }
+        }
+      }
+
+      dtS
+    }
+
+    ggS$data<-ggS$data %>% recale_from_bottom(.)
+    ggT$data<-ggT$data %>% recale_from_bottom(.)
 
 
 
@@ -329,19 +344,45 @@ ggvita.alml<- function(one_result,
 
 
 
+  }
+
+
+
+  if(show.pruned.node==T){
+
+    ggS<-ggS+geom_point(data=trS_parent_of_pruned,
+                        mapping=aes(x,
+                                    y
+                                    #size=log10(15-x)
+                        ),
+                        color="red",
+                        size=1
+    )
+
+
+
+    ggT<-ggT+geom_point(data=trT_parent_of_pruned,
+                        mapping=aes(x,
+                                    y
+                                    #size=log10(15-x)
+                        ),
+                        color="red",
+                        size=1
+    )
+
+  }
+
+  ggS$data2[ggS$data2$group==0,]<-ggS$data
+  ggT$data2[ggT$data2$group==0,]<-ggT$data
 
 
 
   this_result<-structure(list(data=one_result,
                               toPlot=the_toPlot,
                               plot=list("ggS"=ggS,
-                                        "ggT"=ggT+scale_x_reverse())),
+                                        "ggT"=ggT)),
                          class=c("ggvita","list")
   )
-
-
-
-
 
 
 
@@ -371,6 +412,6 @@ ggvita.alml<- function(one_result,
 
 print.ggvita <- function(i){
   multiplot(i$plot$ggS,
-            i$plot$ggT,
+            i$plot$ggT+scale_x_reverse(),
             ncol = 2)
 }

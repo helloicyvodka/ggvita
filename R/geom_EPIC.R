@@ -50,7 +50,7 @@ add_ggvita.geom_EPIC<-function(e1,e2,SorT){
 
   epic_gene_expr_simple<-(e2$expr_file)
 
-  epic_gene_expr_simple<-epic_gene_expr_simple[,scale_blot:=scale(blot)]
+  epic_gene_expr_simple<-epic_gene_expr_simple[,scale_blot:= normalized(blot)]
 
   full_tr<-e1$toPlot
 
@@ -62,13 +62,18 @@ add_ggvita.geom_EPIC<-function(e1,e2,SorT){
 
   setnames(full_tr_nodes_order,"node.order","node")
 
-  full_tr_ggtree_data<-full_tr2[[paste0("gg",SorT)]]$data
+  #full_tr_ggtree_data<-full_tr2[[paste0("gg",SorT)]]$data
+
+  # full_tr_merge<-
+  #   merge(full_tr_ggtree_data,
+  #         full_tr_nodes_order[,c("parent.seq","parent.order","node.seq","node")],
+  #         by="node"
+  #   ) %>% data.table()
 
   full_tr_merge<-
-    merge(full_tr_ggtree_data,
-          full_tr_nodes_order[,c("parent.seq","parent.order","node.seq","node")],
-          by="node"
-    ) %>% data.table()
+    full_tr2[[paste0("gg",SorT)]]$data %>%
+    filter(matched_or_pruned=="matched") %>%
+    data.table()
 
   setkey(full_tr_merge,"node.seq")
 
@@ -132,6 +137,7 @@ add_ggvita.geom_EPIC<-function(e1,e2,SorT){
     unlist()
 
   epic_gene_expr_simple<-epic_gene_expr_simple%>%as.data.frame()%>%data.table()
+
 
 
 
