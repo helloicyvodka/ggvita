@@ -14,24 +14,43 @@
 #'
 #' An alm file contains the information of teriminal tips and their tissue types.
 #'
-#' @param file the address of the alm file
+#' @param fileS the address of the treeS alm file
+#' @param fileT the address of the treeT alm file
 #' @return NULL, but create a variable named "alm_label" automately
 #' @keywords readal.alm
 #' @import magrittr
 #' @export
 
 
-readal.alm<-function(file){
+readal.alm<-function(fileS,fileT){
 
-  label<-read.table(file,header = T,colClasses = "character")
+  label_S<-read.table(fileS,header = T,colClasses = "character")
 
-  label_list<-list()
+  label_T<-read.table(fileT,header = T,colClasses = "character")
 
-  label$Lineage<-label$Lineage %>% as.character()
 
-  for(i in 1:nrow(label)){
-    label_list[[label[i,1]]]<-label[i,3]
+  #
+
+
+  label_list_S<-list()
+
+  label_S$Lineage<-label_S$Lineage %>% as.character()
+
+  for(i in 1:nrow(label_S)){
+    label_list_S[[label_S[i,1]]]<-label_S[i,3]
   }
+
+  #
+
+  label_list_T<-list()
+
+  label_T$Lineage<-label_T$Lineage %>% as.character()
+
+  for(i in 1:nrow(label_T)){
+    label_list_T[[label_T[i,1]]]<-label_T[i,3]
+  }
+
+  label_list<-list(treeS=label_list_S,treeT=label_list_T)
 
   class(label_list)<-c("alm_list",class(label_list))
 
@@ -76,7 +95,7 @@ readal.alm<-function(file){
 readal.alml<-function(file){
 
   if(!exists("alm_label")){
-    stop("Please run read_alm firstly and create the alm_label varaiable! ATTENTION: read_alm will creates alm_label variable automately.")
+    stop("Please run readal.alm firstly and create the alm_label varaiable! ATTENTION: readal.alm will creates alm_label variable automately.")
   }
 
 

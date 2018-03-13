@@ -2,6 +2,7 @@
 #'
 #' @param seq the lineage name  seq of all nodes in a tree, split with space
 #' @param the_root the root of the tree
+#' @param SorT "S" or"T"
 #' @import plyr
 #' @import dplyr
 #' @import data.table
@@ -12,7 +13,10 @@
 #' @import pipeR
 
 
-tr2phylo <- function(seq, the_root) {
+tr2phylo <- function(seq,the_root,SorT) {
+
+  tr_alm_label<-alm_label[[as.character(paste0("tree",SorT))]]
+
   # @ group the tips and the nodes
 
   the_seq <- s2v(seq)
@@ -126,10 +130,10 @@ tr2phylo <- function(seq, the_root) {
 
 
 
-  get_the_label <- function(x) {
+  get_the_label <- function(x,tr_alm_label) {
     x <- as.character(x)
-    if (x %in% names(alm_label)) {
-      x.label <- alm_label[[x]]
+    if (x %in% names(tr_alm_label)) {
+      x.label <- tr_alm_label[[x]]
     } else{
       x.label <- "???"
     }
@@ -139,8 +143,8 @@ tr2phylo <- function(seq, the_root) {
   nodes_order <- nodes_order %>% mutate(label =
                                           unlist(lapply(nodes_order$node.seq, function(x) {
                                             x <- as.character(x)
-                                            if (x %in% names(alm_label)) {
-                                              x.label <- alm_label[[x]]
+                                            if (x %in% names(tr_alm_label)) {
+                                              x.label <- tr_alm_label[[x]]
                                               if (length(x.label) == 0) {
                                                 x.label <- "???"
                                               }
@@ -181,7 +185,7 @@ tr2phylo <- function(seq, the_root) {
     matrix(cbind(the_parent_order, the_seq_order), ncol = 2)[-1, ]
 
   phylo_tree$tip.label <-
-    as.character(unlist(lapply(the_seq[order(the_seq_order)][1:length(the_tip)], get_the_label)))
+    as.character(unlist(lapply(the_seq[order(the_seq_order)][1:length(the_tip)], function(x){get_the_label(x,tr_alm_label)})))
 
   phylo_tree$Nnode <-
     as.integer(length(unique(the_node)))
@@ -227,7 +231,8 @@ alml_2_phylo <- function(the_result) {
           the_result$MatchS,
           the_result$PruneS
         ),
-        the_result$RootS
+        the_result$RootS,
+        "S"
       )
 
   } else{
@@ -235,7 +240,8 @@ alml_2_phylo <- function(the_result) {
       tr2phylo(paste0(the_result$RootS,
                       " ",
                       the_result$MatchS),
-               the_result$RootS)
+               the_result$RootS,
+               "S")
   }
 
   treeS$nodes_order <- treeS$nodes_order %>%
@@ -269,13 +275,15 @@ alml_2_phylo <- function(the_result) {
           the_result$MatchT,
           the_result$PruneT
         ),
-        the_result$RootT
+        the_result$RootT,
+        "T"
       )
 
   } else{
     treeT <-
       tr2phylo(paste0(the_result$RootT, " ", the_result$MatchT),
-               the_result$RootT)
+               the_result$RootT,
+               "T")
   }
 
   treeT$nodes_order <-
