@@ -22,7 +22,7 @@ R package, ggvita, is developed for visualization of tree alignment results. The
 ```
 library(ggvita)
 the_alm_file <- "~/2017-2018/tree/ggtree_align/data/fun.alm"
-readal.alm(the_alm_file)
+readal.alm(treeS=the_alm_file,treeT=the_alml_file)
 ```
 This will create `alm_label` in your environment automately.
 
