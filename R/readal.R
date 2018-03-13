@@ -80,9 +80,9 @@ readal.alm<-function(fileS,fileT){
 
 #' Read local alignment results from HSA calculation and transform the result from txt to list in R
 #'
-#' @title read_alml
+#' @title readal.alml
 #' @author Meng Yuan
-#' @param file file address
+#' @param file file address of alml result
 #' @return a list containing the result (phylos of treeS and treeT, the matching dataframe) and the result analysis (pValue and etc.)
 #' @export
 #' @import rlist
