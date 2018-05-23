@@ -13,7 +13,6 @@
 #' @param method <l or g>
 #' @param max_target <target num for l>
 #' @param test testNum
-#' @param outfile <output file path>
 #' @param all <T or F>
 #' @param prune pruneScore
 #' @export

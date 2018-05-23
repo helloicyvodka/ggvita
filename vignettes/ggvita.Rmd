@@ -9,52 +9,52 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-R package, ggvita, is developed for visualization of tree alignment results. These results connect genotypes with phenotypes during a binary-tree development, from single cell ( usually zygote ) to multiple cells. Pro. Jianrong Philip Yang designed an algorithm to calculate the similarity between trees, in Sun Yat-sen University, Guang Zhou. This algorithm can dectect tree similar phenotypes at the sub tree scale. When we connect both genotypes and phenotypes of livings, we can observe some interesting phenomena and find out the biology mechanisms behind them. geom_EPIC function can add expression levels of genes from EPIC (http://epic.gs.washington.edu/) on the branches of trees alignment results.
+R package, ggvita, is developed for visualization of tree alignment results. These results connect genotypes with phenotypes during a binary-tree development, from single cell ( usually zygote ) to multiple cells. Pro. Jianrong Philip Yang designed an algorithm to calculate the similarity between trees, in Sun Yat-sen University, Guang Zhou. This algorithm can dectect tree similar phenotypes at the sub tree scale. When we connect both genotypes and phenotypes of livings, we can observe some interesting phenomena and find out the biology mechanisms behind them. stat_EPIC function can add expression levels of genes from EPIC (http://epic.gs.washington.edu/) on the branches of trees alignment results.
 
 
-**The results should be obtained through HSA software FIRSTLY.**
-
-
+**The results should be obtained through DELTA software FIRSTLY.**
 
 ## Local alignment 
 
-* Read the alm file. 
+* Read in the result from DELTA. 
 ```
 library(ggvita)
-the_alm_file <- "~/2017-2018/tree/ggtree_align/data/fun.alm"
-readal.alm(treeS=the_alm_file,treeT=the_alml_file)
+alm_file <- "the address of ggvita data -- fun.alm "
+alml_file <- "the address of ggvita data -- fun.alml "
+alml_list <- readal(outfile= alml_file, fileS=alm_file, fileT=alml_file)
 ```
-This will create `alm_label` in your environment automately.
-
-
-* Read the alml file into a list. 
+ggvita. This will only show the basic tree alignment result with structures of treeS and treeT.
 
 ```
-the_alml_file <- "~/2017-2018/tree/ggtree_align/data/fun.alml"
-the_alml <- readal.alml (the_alml_file)
-```
-This list will contain the results of alml.
-
-* ggvita. This will only show the tree alignment result with phenotypes of terminal tips on treeS and treeT.
-
-```
-p <- ggvita(the_alml$`1`, print=F)
+p <- ggvita(alml_list, 3)
 p
 ```
-  * score_order : the order of results, arranged according scores of each results. Scores can be equal across results.
-  * score: the HSA score calculated by our tree alignment algorithm.
-  * RootS: the root of the tree on the left.
-  * RootT: the root of the tree on the right.
-  
-* geom_EPIC. This will show the tree alignment result with both genotype and phenotype of treeS and treeT.
+
+* stat_EPIC. This will show the tree alignment result with both genotype and phenotype of treeS and treeT.
 
 ```{r, eval=FALSE, message=TRUE, warning=FALSE, include=FALSE}
 
 the_EPIC_expr_file <- "~/2017-2018/Predict_expr/data/epic/epic_data/CD20061215_pha4I2L_11.csv"
-pp <- p %+ggvita% geom_EPIC(the_EPIC_expr_file,mc.cores=20)
+pp <- p+stat_EPIC(p,the_EPIC_expr_file)
 pp
 ```
 This is an example of PHA-4 gene expression.
+
+
+
+* stat_EPIC. This will show the tree alignment result with both genotype and phenotype of treeS and treeT.
+
+```{r, eval=FALSE, message=TRUE, warning=FALSE, include=FALSE}
+
+ppp <- pp+geom_tippoint(p,the_EPIC_expr_file)
+pp
+```
+This is an example of PHA-4 gene expression.
+
+
+
+
+
 
 #### **Generally %+ggvita% is highly recommended than + !**
 
