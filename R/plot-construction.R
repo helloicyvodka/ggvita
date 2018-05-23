@@ -29,6 +29,7 @@
 #' @export
 
 
+
 "+.ggvita"<-function(e1,e2){
 
   e2name <- deparse(substitute(e2))
@@ -56,7 +57,6 @@
 #'
 #'
 #'
-"%+ggvita%"<- `+.ggvita`
 
 
 #' @import ggplot2
@@ -69,32 +69,61 @@ ggvita_add<-function(e1,e2,e2name)UseMethod("ggvita_add",e2)
 #' @import ggtree
 
 ggvita_add.default<- function(e1,e2,e2name) {
-  e1$plot$ggS<- e1$plot$ggS+e2
-  e1$plot$ggT<- e1$plot$ggT+e2
-  e1
+
+  stop("Don't know how to add !")
 }
 
 #' @import ggplot2
 #' @import ggtree
 
-ggvita_add.ggproto<- function(e1,e2,e2name) {
+ggvita_add.Layer<- function(e1,e2,e2name) {
   e1$plot$ggS<- e1$plot$ggS+e2
   e1$plot$ggT<- e1$plot$ggT+e2
   e1
 }
 
+ggvita_add.list<- function(e1,e2,e2name) {
+  e1$plot$ggS<- e1$plot$ggS+e2
+  e1$plot$ggT<- e1$plot$ggT+e2
+  e1
+}
+
+ggvita_add.Scale<- function(e1,e2,e2name) {
+  e1$plot$ggS<- e1$plot$ggS+e2
+  e1$plot$ggT<- e1$plot$ggT+e2
+  e1
+}
+
+ggvita_add.theme<- function(e1,e2,e2name) {
+  e1$plot$ggS<- e1$plot$ggS+e2
+  e1$plot$ggT<- e1$plot$ggT+e2
+  e1
+}
 #' @import ggplot2
 #' @import ggtree
 
 
-ggvita_add.geom_ggvita <- function(e1,e2,e2name) {
- e1$plot$ggS<-add_ggvita(e1,e2,SorT="S")
- e1$plot$ggT<-add_ggvita(e1,e2,SorT="T")
+ggvita_add.ggvita_layers <- function(e1,e2,e2name) {
+ e1$plot$ggS<-e1$plot$ggS+e2$layer.S
+ e1$plot$ggT<-e1$plot$ggS+e2$layer.T
  e1
 }
 
 
-add_ggvita<-function(e1,e2,SorT)UseMethod("add_ggvita",e2)
+ggvita_add.ggvita_themes <- function(e1,e2,e2name) {
+  e1$plot$ggS<-e1$plot$ggS+e2$theme.S
+  e1$plot$ggT<-e1$plot$ggS+e2$theme.T
+  e1
+}
+
+ggvita_add.ggvita_scales <- function(e1,e2,e2name) {
+  e1$plot$ggS<-e1$plot$ggS+e2$scale.S
+  e1$plot$ggT<-e1$plot$ggS+e2$scale.T
+  e1
+}
+
+"%+ggvita%" <-`+.ggvita`
+
 
 
 

@@ -129,7 +129,7 @@ get_outside_parent <- function(the_seq) {
   unique(y)
 }
 
-
+#' @export
 s2v <- function(x) {
   unlist(strsplit(x, split = " "))
 }

@@ -1,0 +1,9 @@
+#' A theme to add legend on both sides
+
+theme_al <- function(){
+
+  l <- list(theme.S=theme(legend.position = "left"),
+            theme.T=theme(legend.position = "right"))
+  class(l)<-"ggvita_themes"
+  return(l)
+}
