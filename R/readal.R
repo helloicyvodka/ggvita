@@ -17,7 +17,7 @@ readal<-function(outfile,
                  fileS,
                  fileT,
                  cost,
-                 method=NULL,
+                 method,
                  max.target=NULL,
                  test=NULL,
                  all=NULL,
@@ -25,7 +25,8 @@ readal<-function(outfile,
                  ){
 
 
-   DDD <- readal.alml(outfile)
+  if(method=="l")DDD <- readal.alml(outfile)
+  if(method=='g')DDD <- readal.almg(outfile)
 
    attr(DDD,"params") <- list(
                       outfile=outfile,
