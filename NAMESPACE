@@ -2,8 +2,11 @@
 
 S3method("+",ggvita)
 export(LN_to_Bin)
+export(ggvita)
+export(ggvita.classic)
 export(ggvita_add)
 export(readal)
+export(readal.alml)
 export(s2v)
 export(stat_epic)
 export(stat_prune)

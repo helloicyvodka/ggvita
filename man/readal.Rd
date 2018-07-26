@@ -26,8 +26,6 @@ readal(outfile, fileS, fileT, cost = NULL, method = NULL,
 \item{prune}{pruneScore}
 
 \item{max_target}{<target num for l>}
-
-\item{outfile}{<output file path>}
 }
 \description{
 Read in the result of DELTA for analysis

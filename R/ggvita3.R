@@ -13,6 +13,7 @@ library(readr)
 #' @param result.order the order of result you want to show
 #' @param ... same as ggtree parameters (ggtree::ggtree())
 #' @return a basic tree alignment structure
+#' @export
 
 ggvita<- function(alml_list, result.order,...){
 
@@ -113,6 +114,7 @@ ggvita<- function(alml_list, result.order,...){
 #' @param tip_size size of tips
 #' @param ... same as ggtree parameters (ggtree::ggtree())
 #' @return a basic tree alignment structure
+#' @export
 
 
 

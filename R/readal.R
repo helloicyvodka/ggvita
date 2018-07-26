@@ -68,10 +68,11 @@ readal<-function(outfile,
 #' @import plyr
 #' @import dplyr
 #' @import ggtree
+#' @export
 
 #file<-"../yangjr_test/01.treeS.alml"
 
-readal.alml2<-function(file){
+readal.alml<-function(file){
 
   the_result<-list()
 
