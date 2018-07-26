@@ -13,9 +13,9 @@
 
 #' @export
 
-
 ggvita_add <- function(e1, e2) { UseMethod("ggvita_add",e2)}
 
+#' @export
 ggvita_add.gg <- function(e1,e2){
 
   e1$plot$ggS <- e1$plot$ggS + e2
@@ -29,6 +29,8 @@ ggvita_add.gg <- function(e1,e2){
 
 }
 
+
+#' @export
 ggvita_add.ggvita <- function(e1,e2){
 
   e1$plot$ggS <- e1$plot$ggS + e2$layer.S
