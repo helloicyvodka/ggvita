@@ -2,10 +2,18 @@
 % Please edit documentation in R/plot-construction.R
 \name{ggvita_add}
 \alias{ggvita_add}
-\title{Add theme to ggvita object}
+\title{Add layer to ggvita}
 \usage{
-ggvita_add(e1, e2, e2name)
+ggvita_add(e1, e2)
+}
+\arguments{
+\item{e1}{element one, a ggvita object}
+
+\item{e2}{element two, any layer in ggvita, ggtree, ggplot, including "geom_?", "stat_?", "scale_?","theme_?"}
+}
+\value{
+a ggvita object
 }
 \description{
-Add theme to ggvita object
+The key function which helps ggvita work together with ggtree and ggplot2 system. OO system. Layer adding style.
 }

@@ -3,19 +3,35 @@
 #' Transform C.elegans cell Lineage Name (e.g. "MSapapap") to Lineage ("10010101") (binary sequence, index)
 #' @author Meng Yuan
 #' @param the_LN_vec C.elegans cell Lineage Name (e.g. "MSapapap")
+#' @param mc.cores This function is very slow. Suggest to use a few cores.
 #' @return Lineage(binary sequence, index)
-#' @import dplyr
-#' @import data.table
-#' @import rlist
-#' @import parallel
-#' @import pipeR
+#' @importFrom magrittr %>%
 #' @export
 
-LN_to_Bin<- function(the_LN_vec) {
 
 
 
-  #########
+
+
+LN_to_Bin<- function(the_LN_vec,mc.cores=1) {
+
+
+  r <- parallel::mclapply(the_LN_vec,the_LN_2_trueLN,mc.cores = mc.cores) %>% as.character()
+
+  return(r)
+
+
+}
+
+
+
+
+
+
+
+#' @importFrom magrittr %>%
+
+the_LN_2_trueLN <- function(x) {
 
   the_prefix <- c(
     "AB",
@@ -76,7 +92,7 @@ LN_to_Bin<- function(the_LN_vec) {
 
   #########
 
-   the_true_prefix <- c(
+  the_true_prefix <- c(
     "Za", #"AB"
     "Za",
     "Zaprppppapa",
@@ -135,66 +151,56 @@ LN_to_Bin<- function(the_LN_vec) {
 
 
 
-  the_prefix_df <-
-    data.frame(Prefix = the_prefix, True_prefix = the_true_prefix) %>%
-    list.parse()
+  the_prefix_list  <- the_true_prefix
 
+  names(the_prefix_list) <- the_prefix
 
-  ###########
+  the_matched_prefix <- the_prefix[startsWith(x, the_prefix)]
 
+  the_matched_prefix <- the_matched_prefix[which(nchar(the_matched_prefix) == (the_matched_prefix %>% nchar() %>% max()))]
 
-  the_LN_2_trueLN <- function(x) {
-
-    the_matched_prefix <- the_prefix[startsWith(x, the_prefix)]
-
-    the_matched_prefix <-
-      the_matched_prefix[which(nchar(the_matched_prefix) == (the_matched_prefix %>% nchar() %>% max()))]
-
-    if (length(the_matched_prefix) == 0) {
-      stop("The prefix was not matched!")
-    }
-
-    #a -> 0; p -> 1
-    #l -> 0; r -> 1
-    #d -> 0; v -> 1
-
-    x <- x %>%
-      as.character() %>%
-      gsub("\\.", "", .) %>%
-      gsub(" ", "", .) %>%
-      sub(
-        the_matched_prefix,
-        the_prefix_df %>>%
-          list.filter(Prefix == the_matched_prefix) %>>%
-          list.mapv(True_prefix)
-        ,
-        .
-      )
-
-    if(x!="Z"){
-
-       x<-sub("Z", "", x) %>%
-        gsub("a", "0", .) %>%
-        gsub("l", "0", .) %>%
-        gsub("d", "0", .) %>%
-        gsub("p", "1", .) %>%
-        gsub("r", "1", .) %>%
-        gsub("v", "1", .)
-
-    }else{
-      x<-"Root"
-    }
-
-    return(x)
+  if (length(the_matched_prefix) == 0) {
+    stop("The prefix was not matched!")
   }
 
-   ###########
 
 
-  return(mclapply(the_LN_vec,
-                  the_LN_2_trueLN,
-                  mc.cores = 16) %>%
-           unlist())
+  #a -> 0; p -> 1
+  #l -> 0; r -> 1
+  #d -> 0; v -> 1
+
+  x <- x %>%
+    as.character() %>%
+    gsub("\\.", "", .) %>%
+    gsub(" ", "", .)
 
 
+  the_matcher_prefix.2 <- the_prefix_list[the_matched_prefix] %>% as.character()
+
+
+   x <-
+    x %>%
+    sub(
+      the_matched_prefix,
+      the_matcher_prefix.2 ,
+      .
+    )
+
+  if(x!="Z"){
+
+    x<-sub("Z", "", x) %>%
+      gsub("a", "0", .) %>%
+      gsub("l", "0", .) %>%
+      gsub("d", "0", .) %>%
+      gsub("p", "1", .) %>%
+      gsub("r", "1", .) %>%
+      gsub("v", "1", .)
+
+  }else{
+    x<-"Root"
+  }
+
+  return(x)
 }
+
+###########

@@ -3,16 +3,17 @@
 #' @title stat_EPIC
 #' @param ggvita.object the ggvita object you want to add to
 #' @param expr_file the address of the gene expressing file from EPIC dataset
+#' @param mc.cores This function is very slow. Suggest to use a few cores.
 #' @param ... same with geom_segment parameters
 #' @return  tree alignment result and corresponding gene expression. Phenotype and Genotype.
 #' @export
 #'
 
 
-stat_epic <- function(ggvita.object,expr_file,...){
+stat_epic <- function(ggvita.object,expr_file,mc.cores=1,...){
 
-  df.S <- cal_EPIC(ggvita.object$plot$ggS$data,expr_file)
-  df.T <- cal_EPIC(ggvita.object$plot$ggT$data,expr_file)
+  df.S <- cal_EPIC(ggvita.object$plot$ggS$data,expr_file,mc.cores=mc.cores)
+  df.T <- cal_EPIC(ggvita.object$plot$ggT$data,expr_file,mc.cores=mc.cores)
 
   g.S  <- geom_segment(data = df.S,
                        aes(
@@ -39,7 +40,7 @@ stat_epic <- function(ggvita.object,expr_file,...){
 
   g <-list(layer.S=g.S,layer.T=g.T)
 
-  class(g) <- c("ggvita_layers")
+  class(g) <- c("ggvita")
 
   return(g)
 }
@@ -65,13 +66,13 @@ stat_epic <- function(ggvita.object,expr_file,...){
 
 
 
-cal_EPIC<-function(data,expr_file){
+cal_EPIC<-function(data,expr_file,mc.cores=1){
 
 
 
   #epic.dt <- readal.epic(expr_file = "~/2017-2018/Predict_expr/data/epic/epic_data/CD20061215_pha4I2L_11.csv",)
 
-  epic.df <- readal.epic(expr_file)
+  epic.df <- readal.epic(expr_file,mc.cores=mc.cores)
 
 
   tr.prune <- attr(data,"prune")
@@ -99,7 +100,7 @@ cal_EPIC<-function(data,expr_file){
 
 
 
-    pr.df <-data.frame(pr.sister=tr.prune.sister)
+    pr.df <-data.frame(pr.sister=tr.prune.sister,stringsAsFactors = F)
 
     pr.df$final.parent <- sapply(tr.prune.sister,function(x){
 
@@ -167,6 +168,7 @@ cal_EPIC<-function(data,expr_file){
 
 
   time.freq <- data.frame(table(epic.df.tr$node.seq))
+
   colnames(time.freq) <- c("node.seq","time.freq")
 
 
@@ -233,6 +235,8 @@ cal_EPIC<-function(data,expr_file){
 
   epic.df.tr$yend <- epic.df.tr$y
 
+  epic.df.tr$scaled.blot <- NA
+
   epic.df.tr$scaled.blot <- epic.df.tr$blot
 
   epic.df.tr$scaled.blot[epic.df.tr$scaled.blot < 0] <-0
@@ -250,21 +254,6 @@ cal_EPIC<-function(data,expr_file){
   return(epic.df.tr)
 
  }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

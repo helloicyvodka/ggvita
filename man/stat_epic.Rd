@@ -4,12 +4,14 @@
 \alias{stat_epic}
 \title{stat_EPIC}
 \usage{
-stat_epic(ggvita.object, expr_file, ...)
+stat_epic(ggvita.object, expr_file, mc.cores = 1, ...)
 }
 \arguments{
 \item{ggvita.object}{the ggvita object you want to add to}
 
 \item{expr_file}{the address of the gene expressing file from EPIC dataset}
+
+\item{mc.cores}{This function is very slow. Suggest to use a few cores.}
 
 \item{...}{same with geom_segment parameters}
 }

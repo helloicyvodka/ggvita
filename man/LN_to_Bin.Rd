@@ -4,10 +4,12 @@
 \alias{LN_to_Bin}
 \title{Transform Lineage Name to Lineage}
 \usage{
-LN_to_Bin(the_LN_vec)
+LN_to_Bin(the_LN_vec, mc.cores = 1)
 }
 \arguments{
 \item{the_LN_vec}{C.elegans cell Lineage Name (e.g. "MSapapap")}
+
+\item{mc.cores}{This function is very slow. Suggest to use a few cores.}
 }
 \value{
 Lineage(binary sequence, index)

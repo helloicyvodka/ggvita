@@ -1,0 +1,118 @@
+
+
+
+
+#' Show the basic structure of alignment results
+#'
+#' @param alml_list the variable created from readal
+#' @param result.order the order of result you want to show
+#' @param ... same as ggtree parameters (ggtree::ggtree())
+#' @return a basic tree alignment structure
+#' @export
+
+ggvita<- function(alml_list, result.order,...){
+
+  if(as.numeric(result.order)>length(alml_list))stop("The result order is out of bound! ")
+
+  one.result <- alml_list [[ as.character(result.order) ]]
+
+  to.plot <- alml_to_phylo(alml_list,result.order)
+
+
+  ggS <- ggtree::ggtree(to.plot$tree.S$phylo,...)
+  ggT <- ggtree::ggtree(to.plot$tree.T$phylo,...)
+
+
+
+  ### create the ggtree data
+
+  ggS$data<-merge(ggS$data,to.plot$tree.S$tr_df,by=c("node","parent","isTip","label"))
+  ggT$data<-merge(ggT$data,to.plot$tree.T$tr_df,by=c("node","parent","isTip","label"))
+
+
+
+
+
+
+  if(length(dplyr::setdiff(ggS$data$mp.order,ggT$data$mp.order))!=0){
+
+    stop("Tips from treeS and treeT are not matched!")
+
+  }else{
+
+    ggT$data$y <- sapply(ggT$data$mp.order,function(x){
+
+      ggS$data[ggS$data$mp.order==x,"y"]
+
+
+    })
+
+  }
+
+
+
+  attr(ggS$data,"prune") <- one.result$PruneS
+  attr(ggT$data,"prune") <- one.result$PruneT
+
+
+  attr(ggS$data,"score.order") <- one.result$score_order
+  attr(ggT$data,"score.order") <- one.result$score_order
+
+
+  attr(ggS$data,"score") <- one.result$Score
+  attr(ggT$data,"score") <- one.result$Score
+
+  if(is.null(one.result$PValue)!=T){
+
+    attr(ggS$data,"pvalue") <- one.result$PValue
+    attr(ggT$data,"pvalue") <- one.result$PValue
+
+  }
+
+
+  attr(ggS,"SorT")<-"S"
+  attr(ggT,"SorT")<-"T"
+
+
+  attr(ggS$data,"file.tree") <- attr(alml_list,"params")$fileS
+  attr(ggT$data,"file.tree") <- attr(alml_list,"params")$fileT
+
+
+  plot.result <-structure(list(data=one.result,
+                              toPlot=to.plot,
+                              plot=list("ggS"=ggS,
+                                        "ggT"=ggT)),
+                         class=c("ggvita")
+  )
+
+  return(plot.result)
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

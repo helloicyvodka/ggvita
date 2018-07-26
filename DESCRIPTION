@@ -1,5 +1,5 @@
-Package:ggvita
-Title: An R package for Visualization and annotation of Tree Alignment.
+Package: ggvita
+Title: An R package for VIsualization and annotation of Tree Alignment.
 Version: 1.0.0
 Authors@R: c(person("Meng Yuan", email = "dilimou26@gmail.com", role = c("aut", "cre")),
              person("Jianrong Philip Yang", email = "jianrong.yang@outlook.com", role = c("aut"))
@@ -12,36 +12,27 @@ Description:
   (2)ggtree: Guangchuang Yu, David Smith, Huachen Zhu, Yi Guan, Tommy Tsan-Yuk Lam. 
   ggtree: an R package for visualization and annotation of phylogenetic trees with their covariates and other associated data. 
   Methods in Ecology and Evolution 2017, 8(1):28-36, doi:10.1111/2041-210X.12628
-Depends: 
+Depends:
   R (>= 3.3.2)
 License: Artistic-2.0
 Encoding: UTF-8
-LazyData: true  
+LazyData: TRUE  
 Imports:
-  ggplot2 (>= 2.2.0),
-  ggtree (>= 1.8),
-  data.table (>= 1.10.4-2),
-  dplyr (>= 0.7.4),
-  magrittr (>= 1.5), 
-  plyr (>= 1.8.4),
-  pipeR (>= 0.1.6.3),
-  rlist (>= 0.4.6.1),
-  cowplot(>= 0.9.0)
+  ggplot2,
+  ggtree,
+  data.table,
+  dplyr ,
+  magrittr , 
+  plyr,
+  rlist,
+  cowplot,
+  readr,
+  utils,
+  grDevices,
+  parallel
 Suggests:
-  knitr (>= 0.1.0),
+  knitr,
   testthat,
   rmarkdown
 RoxygenNote: 6.0.1
 VignetteBuilder: knitr
-
-
-
-
-
-
-
-
-
-
-
-

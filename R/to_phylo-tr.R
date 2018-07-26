@@ -1,39 +1,3 @@
-#alml_list <- readal("/mnt/data/home/phil/acting/treeComparison/code/DELTA/fun.alml","./data/fun.alm","./data/fun.alm")
-# tmp <- alml_to_phylo(alml_list,10)
-
-# trr <- list(edge = matrix(c(2, 1), 1, 2), tip.label = "a", Nnode = 1L)
-# class(trr) <- "phylo"
-# str(trr)
-
-alml_to_phylo <- function( alml_list , result.order){
-
-  one.result <- alml_list[[ as.character( result.order ) ]]
-
-  tree.S <- tr_to_phylo( alml_list, result.order, SorT='S')
-  tree.T <- tr_to_phylo( alml_list, result.order, SorT='T')
-
-
-  cell.type.treeS <- unique(attr( alml_list,"params")$fileS$Class)
-  cell.type.treeT <- unique(attr( alml_list,"params")$fileT$Class)
-
-  cell.types.two.tree <- union(cell.type.treeS, cell.type.treeT)
-
-  label.list <- c(rainbow( length(cell.types.two.tree )))
-
-  names(label.list)<- cell.types.two.tree
-
-  tree.S$tr_df$tip.fill<-label.list[tree.S$tr_df$Class]
-  tree.T$tr_df$tip.fill<-label.list[tree.T$tr_df$Class]
-
-
-  result <- list(ori.result = one.result,
-                 tree.S     = tree.S,
-                 tree.T     = tree.T
-                 )
-  result
-
-}
-
 
 
 tr_to_phylo <- function( alml_list, result.order,SorT){
@@ -51,8 +15,10 @@ tr_to_phylo <- function( alml_list, result.order,SorT){
               prune = tr.prune
   )
 
+
   if(length(na.omit(tr.prune))!=0){
-    tr.prune.sister <- as.character(sapply(tr.prune, function(x){
+
+      tr.prune.sister <- as.character(sapply(tr.prune, function(x){
 
       x.parent <- get_parent(x)
 
@@ -130,24 +96,23 @@ tr_to_phylo <- function( alml_list, result.order,SorT){
 
   tr_df$mp.order <- sapply(tr_df$node.seq,function(x){
 
-   y <- which(c(tr$root,tr$match)==x)
+    y <- which(c(tr$root,tr$match)==x)
 
-   y
+    y
 
   })
 
 
 
 
-  tr$tips <- setdiff(tr_df$node.seq,
-                     tr_df$parent.seq)
+  tr$tips <- dplyr::setdiff( tr_df$node.seq, tr_df$parent.seq )
 
 
 
 
   tr_df$isTip <- sapply(tr_df$node.seq,function(x){
 
-   x %in% tr$tips
+    x %in% tr$tips
 
   })
 
@@ -155,8 +120,7 @@ tr_to_phylo <- function( alml_list, result.order,SorT){
 
 
 
-  tr$nodes <- setdiff(tr_df$node.seq,
-                      tr$tips)
+  tr$nodes <- dplyr::setdiff( tr_df$node.seq, tr$tips )
 
 
 
@@ -190,9 +154,9 @@ tr_to_phylo <- function( alml_list, result.order,SorT){
 
     if(length(y)==0){
 
-        stop("Existing a node/tip (not the root) without parent!")
+      stop("Existing a node/tip (not the root) without parent!")
 
-      }
+    }
 
     y
 

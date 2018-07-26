@@ -134,6 +134,28 @@ s2v <- function(x) {
   unlist(strsplit(x, split = " "))
 }
 
-`%+%` <- function(a, b) paste0(a, b)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

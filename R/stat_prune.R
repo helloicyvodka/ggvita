@@ -74,7 +74,7 @@ stat_prune <- function(ggvita.object,color="red",size=2) {
   r <- list()
 
 
-  if(is.null(ggvita.object$data$PruneS)!=T){
+  if(all(is.na(ggvita.object$data$PruneS)==F)){
 
     pr.data.S <- cal_prune(ggvita.object$plot$ggS$data)
 
@@ -85,7 +85,7 @@ stat_prune <- function(ggvita.object,color="red",size=2) {
 
 
 
-  if(is.null(ggvita.object$data$PruneT)!=T){
+  if(all(is.na(ggvita.object$data$PruneT)==F)){
 
   pr.data.T <- cal_prune(ggvita.object$plot$ggT$data)
 
@@ -94,6 +94,7 @@ stat_prune <- function(ggvita.object,color="red",size=2) {
 
   }else{r$layer.T <- NULL}
 
+  class(r) <- "ggvita"
 
   return(r)
 }

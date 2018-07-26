@@ -19,65 +19,64 @@ R package, ggvita, is developed for visualization of tree alignment results. The
 * Read in the result from DELTA. 
 ```
 library(ggvita)
-alm_file <- "the address of ggvita data -- fun.alm "
-alml_file <- "the address of ggvita data -- fun.alml "
-alml_list <- readal(outfile= alml_file, fileS=alm_file, fileT=alml_file)
+
+# alm_file <- "the address of ggvita data -- fun.alm "
+
+# alml_file <- "the address of ggvita data -- fun.alml "
+
+# cost <- "the address of cost file --- cost.tsv"
+
+# alml_list <- readal(outfile= alml_file, fileS=alm_file, fileT=alml_file,cost=cost)
+
 ```
 ggvita. This will only show the basic tree alignment result with structures of treeS and treeT.
 
-```
-p <- ggvita(alml_list, 3)
+```{r}
+p <- ggvita(ggvita::alml_list, 3)
 p
 ```
 
-* stat_EPIC. This will show the tree alignment result with both genotype and phenotype of treeS and treeT.
+*  "%++%" is a ggvita linking synax to add the ggvita objects, similar to the system of ggplot2. We can view the leaves tissue by adding tippoint layer.
 
-```{r, eval=FALSE, message=TRUE, warning=FALSE, include=FALSE}
+```{r}
+ p %++% geom_tippoint(aes(fill=I(tip.fill)),size=tip_size,shape=21,color="NA")
 
-the_EPIC_expr_file <- "~/2017-2018/Predict_expr/data/epic/epic_data/CD20061215_pha4I2L_11.csv"
-pp <- p+stat_EPIC(p,the_EPIC_expr_file)
-pp
 ```
+
+* stat_epic. This will show the tree alignment result with both genotype and phenotype of treeS and treeT.
 This is an example of PHA-4 gene expression.
 
+```{r}
 
+#expr_file <- normalizePath("./CD20061215_pha4I2L_11.csv")
 
-* stat_EPIC. This will show the tree alignment result with both genotype and phenotype of treeS and treeT.
+# stat_epic_example <- stat_epic(p,expr_file = expr_file,size=1,mc.cores = 1) (Use ggvita::stat_epic_example to show.)
+pp <- 
+p %++%  
+  ggvita::stat_epic_example %++% 
+  geom_tippoint(aes(fill=I(tip.fill)),size=1,shape=21,color="NA") %++% 
+  scale_color_gradientn(colors =rainbow(7)[1:7],
+                        values = c(0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8)/3
+                        )
 
-```{r, eval=FALSE, message=TRUE, warning=FALSE, include=FALSE}
-
-ppp <- pp+geom_tippoint(p,the_EPIC_expr_file)
 pp
-```
-This is an example of PHA-4 gene expression.
-
-
-
-
-
-
-#### **Generally %+ggvita% is highly recommended than + !**
-
-Note that ggvita has compatibility with ggtree and ggplot2 system.  However, when you need to add theme_* to ggvita object, use "%+ggvita%" instead.
-
-```
-library(ggplot2)
-pp %+ggvita% theme_bw() 
-
-```
-```
-pp+geom_vline(xintercept = 5,color="red")
-
-```
 
 
 ```
-pp %+ggvita%
-  geom_vline(xintercept = 5,color="red") %+ggvita% 
-  theme_dark() %+ggvita% 
-  geom_hline(yintercept = 400)
 
+
+
+* stat_prune. This will show the prune nodes number in tree alignment results of treeS and treeT.
+
+```{r}
+
+pp %++%
+  stat_prune(p,size=1,color="blue")
+  
 ```
+
+
+
 
 **Have fun!**  
 
