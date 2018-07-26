@@ -42,6 +42,7 @@ ggvita_add.ggvita <- function(e1,e2){
 
 }
 
+#'@export
 
 "%++%" <- ggvita_add
 
