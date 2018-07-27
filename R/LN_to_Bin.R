@@ -13,10 +13,14 @@
 
 
 
-LN_to_Bin<- function(the_LN_vec,mc.cores=1) {
+LN_to_Bin<- function(the_LN_vec,mc.cores=1,Root.style="Root") {
 
 
-  r <- parallel::mclapply(the_LN_vec,the_LN_2_trueLN,mc.cores = mc.cores) %>% as.character()
+  r <-
+    parallel::mclapply(the_LN_vec,
+                          function(x)the_LN_2_trueLN(x,Root.style=Root.style),
+                          mc.cores = mc.cores) %>%
+    as.character()
 
   return(r)
 
@@ -31,7 +35,7 @@ LN_to_Bin<- function(the_LN_vec,mc.cores=1) {
 
 #' @importFrom magrittr %>%
 
-the_LN_2_trueLN <- function(x) {
+the_LN_2_trueLN <- function(x,Root.style="Root") {
 
   the_prefix <- c(
     "AB",
@@ -197,10 +201,9 @@ the_LN_2_trueLN <- function(x) {
       gsub("v", "1", .)
 
   }else{
-    x<-"Root"
+    x<- Root.style %>% as.character()
   }
 
   return(x)
 }
 
-###########
