@@ -5,8 +5,8 @@
 \title{Read in the result of DELTA for analysis
 DELTA parameter}
 \usage{
-readal(outfile, fileS, fileT, cost, method = NULL, max.target = NULL,
-  test = NULL, all = NULL, prune = NULL)
+readal(outfile, fileS, fileT, cost, method, max.target = NULL, test = NULL,
+  all = NULL, prune = NULL)
 }
 \arguments{
 \item{outfile}{<Path of DELTA result>. Required.}

@@ -4,7 +4,7 @@
 \alias{LN_to_Bin}
 \title{Transform Lineage Name to Lineage}
 \usage{
-LN_to_Bin(the_LN_vec, mc.cores = 1)
+LN_to_Bin(the_LN_vec, mc.cores = 1, Root.style = "Root")
 }
 \arguments{
 \item{the_LN_vec}{C.elegans cell Lineage Name (e.g. "MSapapap")}
