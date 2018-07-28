@@ -29,7 +29,8 @@ Imports:
   readr,
   utils,
   grDevices,
-  parallel
+  parallel,
+    RColorBrewer
 Suggests:
   knitr,
   testthat,

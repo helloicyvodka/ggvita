@@ -172,7 +172,7 @@ tr_to_phylo <- function( alml_list, result.order,SorT){
 
 
 
-  tr_df <- tr_df %>% arrange(mp.order)
+  tr_df <- tr_df %>% dplyr::arrange(mp.order)
 
 
 
@@ -211,7 +211,7 @@ tr_to_phylo <- function( alml_list, result.order,SorT){
   })
 
 
-  tr_df <- tr_df %>% arrange(mp.order)
+  tr_df <- tr_df %>% dplyr::arrange(mp.order)
 
 
   phylo <- list()

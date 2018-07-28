@@ -13,7 +13,7 @@ alml_to_phylo <- function( alml_list , result.order){
 
   cell.types.two.tree <- union(cell.type.treeS, cell.type.treeT) %>% sort()
 
-  label.list <- c(grDevices::rainbow(length(cell.types.two.tree )))
+  label.list <- RColorBrewer::brewer.pal(length(cell.types.two.tree),name = "Paired")
 
 
 
@@ -21,7 +21,7 @@ alml_to_phylo <- function( alml_list , result.order){
 
   p <-
     ggplot2::ggplot(dt)+
-    ggplot2::geom_point(aes(x=x,y=y,color=I(Fill)),size=2,show.legend =T)+
+    ggplot2::geom_point(ggplot2::aes(x=x,y=y,color=I(Fill)),size=2,show.legend =T)+
     ggplot2::scale_color_manual(values = label.list,labels=cell.types.two.tree,breaks=label.list,name="Class")+
     ggplot2::theme_classic()
 
