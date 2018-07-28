@@ -11,7 +11,7 @@ alml_to_phylo <- function( alml_list , result.order){
   cell.type.treeS <- unique(attr( alml_list,"params")$fileS$Class)
   cell.type.treeT <- unique(attr( alml_list,"params")$fileT$Class)
 
-  cell.types.two.tree <- union(cell.type.treeS, cell.type.treeT)
+  cell.types.two.tree <- union(cell.type.treeS, cell.type.treeT) %>% sort()
 
   label.list <- c(grDevices::rainbow(length(cell.types.two.tree )))
 
