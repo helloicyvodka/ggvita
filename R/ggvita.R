@@ -85,7 +85,8 @@ ggvita<- function(alml_list, result.order,...){
   plot.result <-structure(list(data=one.result,
                               toPlot=to.plot,
                               plot=list("ggS"=ggS,
-                                        "ggT"=ggT)),
+                                        "ggT"=ggT,
+                                        "Legend"=to.plot$legend)),
                          class=c("ggvita")
   )
 
