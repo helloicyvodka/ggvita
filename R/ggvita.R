@@ -6,7 +6,7 @@
 #'
 #' @param alml_list the variable created from readal
 #' @param result.order the order of result you want to show
-#' @param ... same as ggtree parameters (ggtree::ggtree())
+#' @param ... same as ggtree parameters (ggtree::ggtree()) ladderize=T
 #' @return a basic tree alignment structure
 #' @export
 
@@ -19,14 +19,16 @@ ggvita<- function(alml_list, result.order,...){
   to.plot <- alml_to_phylo(alml_list,result.order)
 
 
-  ggS <- ggtree::ggtree(to.plot$tree.S$phylo,...)
-  ggT <- ggtree::ggtree(to.plot$tree.T$phylo,...)
+  ggS <- ggtree::ggtree(to.plot$tree.S$phylo,ladderize=T,...)
+
+  ggT <- ggtree::ggtree(to.plot$tree.T$phylo,ladderize=T,...)
 
 
 
   ### create the ggtree data
 
   ggS$data<-merge(ggS$data,to.plot$tree.S$tr_df,by=c("node","parent","isTip","label"))
+
   ggT$data<-merge(ggT$data,to.plot$tree.T$tr_df,by=c("node","parent","isTip","label"))
 
 
@@ -48,6 +50,8 @@ ggvita<- function(alml_list, result.order,...){
     })
 
   }
+
+
 
 
 

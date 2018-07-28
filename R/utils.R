@@ -2,7 +2,7 @@
 #'
 #' @param x a decimal number
 #' @return a binary sequence of character
-#'
+#' @export
 Dec2Bin <- function(x) {
   i <- 0
   string <- numeric(32)
@@ -28,6 +28,7 @@ Dec2Bin <- function(x) {
 #' @examples
 #' Bin2Dec("10")
 #' Bin2Dec("1000")
+#' @export
 Bin2Dec<- function(seq){
   sum(2^(which(rev(unlist(strsplit(as.character(seq), "")) == 1))-1))
 }

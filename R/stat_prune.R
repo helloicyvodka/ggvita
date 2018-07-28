@@ -9,7 +9,7 @@ cal_prune <- function(data){
 
     tr <- attr(data,"file.tree")
 
-    pr.df <- data.frame(pr.seq=pr.seq)
+    pr.df <- data.frame(pr.seq=pr.seq,stringsAsFactors = F)
 
     pr.df$pr.num <- sapply(pr.df$pr.seq,function(x){
 
@@ -17,7 +17,7 @@ cal_prune <- function(data){
 
       y <- length(l[l==T])
 
-      y <- 2*y+1
+      y <- 2*y-1
 
       return(y)
 
@@ -37,7 +37,7 @@ cal_prune <- function(data){
           break
         }
 
-        if(x %in% data$node.seq){
+        if(x %in% data$node.seq.ori){
           break
         }
 
@@ -46,6 +46,11 @@ cal_prune <- function(data){
         }
 
       }
+
+       x <- data[data$node.seq.ori==x,"node.seq"] %>% as.character()
+
+       if(length(x)!=1)stop("error in find the node!")
+
       return(x)
     })
 
@@ -78,8 +83,8 @@ stat_prune <- function(ggvita.object,color="red",size=2) {
 
     pr.data.S <- cal_prune(ggvita.object$plot$ggS$data)
 
-    r$layer.S <- list(geom_nodepoint(data=pr.data.S,shape=21,color=color,size=size,fill="white"),
-                      geom_nodelab(data=pr.data.S,aes(label=pr.num),color=color,size=size))
+    r$layer.S <- list(ggtree::geom_nodepoint(data=pr.data.S,shape=21,color=color,size=size,fill="white"),
+                      ggtree::geom_nodelab(data=pr.data.S,ggplot2::aes(label=pr.num),color=color,size=size))
   }else{r$layer.S <- NULL}
 
 
@@ -89,8 +94,8 @@ stat_prune <- function(ggvita.object,color="red",size=2) {
 
   pr.data.T <- cal_prune(ggvita.object$plot$ggT$data)
 
-  r$layer.T <- list(geom_nodepoint(data=pr.data.T,shape=21,color=color,size=size,fill="white"),
-                    geom_nodelab(data=pr.data.T,aes(label=pr.num),color=color,size=size))
+  r$layer.T <- list(ggtree::geom_nodepoint(data=pr.data.T,shape=21,color=color,size=size,fill="white"),
+                    ggtree::geom_nodelab(data=pr.data.T,ggplot2::aes(label=pr.num),color=color,size=size))
 
   }else{r$layer.T <- NULL}
 

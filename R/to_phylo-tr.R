@@ -2,6 +2,9 @@
 
 tr_to_phylo <- function( alml_list, result.order,SorT){
 
+
+
+
   one.result <- alml_list[[ as.character( result.order ) ]]
 
   tr.root <- one.result [[ paste0("Root",SorT)]]
@@ -16,34 +19,30 @@ tr_to_phylo <- function( alml_list, result.order,SorT){
   )
 
 
-  if(length(na.omit(tr.prune))!=0){
 
-      tr.prune.sister <- as.character(sapply(tr.prune, function(x){
-
-      x.parent <- get_parent(x)
-
-      x.last <- substr(x, nchar(x) , nchar(x) )
-
-      l <- list("1"="0", "0"="1")
-
-      x.sister <- paste0(x.parent, l[[x.last]] )
-
-      as.character(x.sister)
-
-    }))
-
-    tr$prune.sister <- tr.prune.sister
-
-  }
-
-
-
-
-
-
-  tr_df <- data.frame(node.seq=as.character(na.omit(c(tr$root,
+  tr_df <- data.frame(node.seq.ori=as.character(na.omit(c(tr$root,
                                                       tr$match))),
                       stringsAsFactors = F)
+
+  NewAll.df  <-
+  c(tr_df$node.seq.ori,
+    tr_df$node.seq.ori %>% Find.missed.mother()) %>%
+    Find.tips() %>%
+    ReLin %>%
+    `$`(All)
+
+  colnames(NewAll.df) <- c("node.seq","node.seq.ReLin")
+
+  NewAll.list <- NewAll.df$node.seq.ReLin
+
+  names(NewAll.list) <- NewAll.df$node.seq
+
+
+  tr_df$node.seq <- sapply(tr_df$node.seq.ori,function(x){
+
+    NewAll.list[as.character(x)]
+
+  })
 
 
 
@@ -94,7 +93,7 @@ tr_to_phylo <- function( alml_list, result.order,SorT){
 
 
 
-  tr_df$mp.order <- sapply(tr_df$node.seq,function(x){
+  tr_df$mp.order <- sapply(tr_df$node.seq.ori,function(x){
 
     y <- which(c(tr$root,tr$match)==x)
 
@@ -105,7 +104,9 @@ tr_to_phylo <- function( alml_list, result.order,SorT){
 
 
 
-  tr$tips <- dplyr::setdiff( tr_df$node.seq, tr_df$parent.seq )
+  tr$tips <-
+    dplyr::setdiff(tr_df$node.seq,tr_df$parent.seq) %>%
+    sort(decreasing = T)
 
 
 
@@ -118,14 +119,13 @@ tr_to_phylo <- function( alml_list, result.order,SorT){
 
 
 
-
-
   tr$nodes <- dplyr::setdiff( tr_df$node.seq, tr$tips )
 
 
 
 
   tr_df$node <- sapply(tr_df$node.seq,function(x) {
+
     if (x %in% tr$tips) {
       x.order <- which(tr$tips == x)
     }
@@ -169,10 +169,11 @@ tr_to_phylo <- function( alml_list, result.order,SorT){
 
   file.tree <- attr( alml_list,"params")[[as.character(paste0("file",SorT))]]
 
-  tr_df<-merge(tr_df,file.tree[file.tree$Lineage %in% tr_df$node.seq,],by.x = "node.seq", by.y = "Lineage",all.x=T)
+  tr_df<-merge(tr_df,file.tree[file.tree$Lineage %in% tr_df$node.seq.ori,],by.x = "node.seq.ori", by.y = "Lineage",all.x=T)
 
 
 
+  tr_df <- tr_df %>% arrange(mp.order)
 
 
 
@@ -211,7 +212,7 @@ tr_to_phylo <- function( alml_list, result.order,SorT){
   })
 
 
-
+  tr_df <- tr_df %>% arrange(mp.order)
 
 
   phylo <- list()
@@ -227,7 +228,7 @@ tr_to_phylo <- function( alml_list, result.order,SorT){
 
   phylo$Nnode <- as.integer(length(unique(tr$nodes)))
 
-  phylo$edge.length <- tr_df$edge.length[-1]
+  #phylo$edge.length <- tr_df$edge.length[-1]
 
   phylo$root.edge <- 1
 
