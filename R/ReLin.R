@@ -30,8 +30,10 @@ ReLin <-
     the.growing.tree <- list(c(the.root, the.root))
     the.all.tree  <- the.growing.tree
 
+    PreNum <- length(LeafLin)
+
+
     repeat {
-      PreNum <- length(the.growing.tree)
       the.growing.tree <- lapply(the.growing.tree, function(x) {
         # x=100
         xx1.0 <- paste0(x[1], "0")  # 1000
@@ -71,6 +73,7 @@ ReLin <-
         unlist(list(the.all.tree,the.growing.tree),recursive = F) %>%
         unique()
 
+      the.all.tree
 
       if (length(the.growing.tree) == PreNum)
         break

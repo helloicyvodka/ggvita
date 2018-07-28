@@ -53,8 +53,7 @@ tr_to_phylo <- function( alml_list, result.order,SorT){
 
       repeat{
 
-        x <- substr(x, 1, (nchar(x) - 1))
-
+        x <- substr(x, 0, (nchar(x) - 1))
 
         if (x == "") {
           x <- "Root"
