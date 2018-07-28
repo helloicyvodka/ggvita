@@ -11,7 +11,7 @@ ggvita(alml_list, result.order, ...)
 
 \item{result.order}{the order of result you want to show}
 
-\item{...}{same as ggtree parameters (ggtree::ggtree())}
+\item{...}{same as ggtree parameters (ggtree::ggtree()) ladderize=T}
 }
 \value{
 a basic tree alignment structure

@@ -2,8 +2,11 @@
 
 S3method(ggvita_add,gg)
 S3method(ggvita_add,ggvita)
+S3method(ggvita_add,list)
 S3method(print,ggvita)
 export("%++%")
+export(Bin2Dec)
+export(Dec2Bin)
 export(Find.addNode)
 export(Find.missed.mother)
 export(Find.missed.sister)
