@@ -1,4 +1,6 @@
-
+#' Find unpaired tips of an incompleted tree all lineage.
+#' @param  allLin all lineage
+#' @return unpaired tips
 #' @export
 
 Find.unpaired.tip <- function(allLin){

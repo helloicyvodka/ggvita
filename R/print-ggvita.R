@@ -1,4 +1,5 @@
 
+#' Print ggvita objects
 #'@export
 
 print.ggvita <- function(i){

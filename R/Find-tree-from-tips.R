@@ -1,4 +1,7 @@
-#'@export
+#' Rebuild the complete tree from tips (leaves) lineage.
+#' @param allTips all lineage of tips(leaves).
+#' @return  all lineage of a complete tree.
+#' @export
 #'
 Find.tree.from.tips <- function(allTips){
 

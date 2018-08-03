@@ -1,6 +1,8 @@
 
 
 #' Find the root from allLin
+#' @param  allLin all lineage
+#' @return root of this tree
 #' @export
 
 Find.root <- function(allLin){

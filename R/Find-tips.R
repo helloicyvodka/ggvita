@@ -1,5 +1,8 @@
 
-#'@export
+#' Find tips from all lineage of complete tree.
+#' @param  allLin all lineage of tree
+#' @return tips lineage
+#' @export
 
 Find.tips <- function(allLin){
 

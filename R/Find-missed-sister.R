@@ -1,3 +1,6 @@
+
+#' Find missed sister in all lineaged tree.
+#' @param  allLin the lineage vector of this tree, including internal nodes and leaves.
 #' @export
 
 Find.missed.sister <- function(allLin){

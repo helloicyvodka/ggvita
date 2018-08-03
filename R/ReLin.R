@@ -1,5 +1,7 @@
 
-# 气忌盛，心忌满，才忌露
+#' Renew the incomplete tree leave lineages
+#' @param LeafLin incomplete leave lineages
+#' @return a list inclued both new and past lineages data.frames for all and leaves
 
 ReLin <-
   function(LeafLin) {
