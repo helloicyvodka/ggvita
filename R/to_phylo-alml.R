@@ -13,7 +13,7 @@ alml_to_phylo <- function( alml_list , result.order){
 
   cell.types.two.tree <- union(cell.type.treeS, cell.type.treeT) %>% sort()
 
-  label.list <- RColorBrewer::brewer.pal(length(cell.types.two.tree),name = "Paired")
+  label.list <- grDevices::rainbow(length(cell.types.two.tree))
 
 
 
