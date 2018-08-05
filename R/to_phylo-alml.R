@@ -13,9 +13,8 @@ alml_to_phylo <- function( alml_list , result.order){
 
   cell.types.two.tree <- union(cell.type.treeS, cell.type.treeT) %>% sort()
 
+
   label.list <- grDevices::rainbow(length(cell.types.two.tree))
-
-
 
   dt <-data.frame(x=cell.types.two.tree,y=cell.types.two.tree,Fill=label.list,stringsAsFactors = F)
 

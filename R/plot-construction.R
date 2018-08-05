@@ -45,6 +45,21 @@ ggvita_add.list <- function(e1,e2){
 }
 
 #' @export
+
+ggvita_add.labels <- function(e1,e2){
+
+  e1$plot$ggS <- e1$plot$ggS + e2
+
+  e1$plot$ggT <- e1$plot$ggT + e2
+
+  class(e1) <- "ggvita"
+
+  e1
+
+
+}
+
+#' @export
 ggvita_add.ggvita <- function(e1,e2){
 
   e1$plot$ggS <- e1$plot$ggS + e2$layer.S
@@ -57,6 +72,7 @@ ggvita_add.ggvita <- function(e1,e2){
 
 
 }
+
 
 
 
