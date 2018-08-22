@@ -2,6 +2,7 @@
 
 S3method(ggvita_add,gg)
 S3method(ggvita_add,ggvita)
+S3method(ggvita_add,labels)
 S3method(ggvita_add,list)
 S3method(print,ggvita)
 export("%++%")

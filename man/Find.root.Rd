@@ -6,6 +6,12 @@
 \usage{
 Find.root(allLin)
 }
+\arguments{
+\item{allLin}{all lineage}
+}
+\value{
+root of this tree
+}
 \description{
 Find the root from allLin
 }

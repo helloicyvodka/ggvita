@@ -32,6 +32,11 @@ library(ggvita)
 ggvita. This will only show the basic tree alignment result with structures of treeS and treeT.
 
 ```{r}
+library(ggvita)
+library(ggtree)
+library(ggplot2)
+
+
 p <- ggvita(ggvita::alml_list, 3)
 p
 ```
@@ -39,7 +44,7 @@ p
 *  "%++%" is a ggvita linking synax to add the ggvita objects, similar to the system of ggplot2. We can view the leaves tissue by adding tippoint layer.
 
 ```{r}
- p %++% geom_tippoint(aes(fill=I(tip.fill)),size=tip_size,shape=21,color="NA")
+ p %++% geom_tippoint(aes(fill=I(tip.fill)),size=1,shape=21,color="NA")
 
 ```
 

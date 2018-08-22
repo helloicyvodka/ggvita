@@ -10,7 +10,7 @@
 #' @return a basic tree alignment structure
 #' @export
 
-ggvita<- function(alml_list, result.order,...){
+ggvita <- function(alml_list, result.order,...){
 
   if(as.numeric(result.order)>length(alml_list))stop("The result order is out of bound! ")
 
