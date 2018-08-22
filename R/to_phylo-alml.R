@@ -4,6 +4,7 @@ alml_to_phylo <- function( alml_list , result.order){
 
   one.result <- alml_list[[ as.character( result.order ) ]]
 
+
   tree.S <- tr_to_phylo( alml_list, result.order, SorT='S')
   tree.T <- tr_to_phylo( alml_list, result.order, SorT='T')
 
@@ -15,13 +16,14 @@ alml_to_phylo <- function( alml_list , result.order){
 
 
   label.list <- grDevices::rainbow(length(cell.types.two.tree))
+  names(label.list) <- label.list
 
   dt <-data.frame(x=cell.types.two.tree,y=cell.types.two.tree,Fill=label.list,stringsAsFactors = F)
 
   p <-
     ggplot2::ggplot(dt)+
     ggplot2::geom_point(ggplot2::aes(x=x,y=y,color=I(Fill)),size=2,show.legend =T)+
-    ggplot2::scale_color_manual(values = label.list,labels=cell.types.two.tree,breaks=label.list,name="Class")+
+    ggplot2::scale_color_manual(values=label.list,breaks=label.list,labels=cell.types.two.tree,name="Class")+
     ggplot2::theme_classic()
 
   p.legend <- cowplot::get_legend(p)
