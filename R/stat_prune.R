@@ -84,7 +84,7 @@ stat_prune <- function(ggvita.object,color="red",size=2) {
     pr.data.S <- cal_prune(ggvita.object$plot$ggS$data)
 
     r$layer.S <- list(ggtree::geom_nodepoint(data=pr.data.S,shape=21,color=color,size=size,fill="white"),
-                      ggtree::geom_nodelab(data=pr.data.S,ggplot2::aes(label=pr.num),color=color,size=size))
+                      ggtree::geom_nodelab(data=pr.data.S,ggplot2::aes(label=pr.num),color=color,size=size*0.75))
   }else{r$layer.S <- NULL}
 
 
@@ -95,7 +95,7 @@ stat_prune <- function(ggvita.object,color="red",size=2) {
   pr.data.T <- cal_prune(ggvita.object$plot$ggT$data)
 
   r$layer.T <- list(ggtree::geom_nodepoint(data=pr.data.T,shape=21,color=color,size=size,fill="white"),
-                    ggtree::geom_nodelab(data=pr.data.T,ggplot2::aes(label=pr.num),color=color,size=size))
+                    ggtree::geom_nodelab(data=pr.data.T,ggplot2::aes(label=pr.num),color=color,size=size*0.75))
 
   }else{r$layer.T <- NULL}
 
