@@ -20,7 +20,7 @@ readal.almg <- function(file,all=F){
 
   nl<-length(the_text)
 
-  result.rownum <- min(which(startsWith(the_text,"1{")))
+  result.rownum <- min(which(startsWith(the_text,"Score:")))
 
   if(all==T){
 
@@ -50,8 +50,8 @@ readal.almg <- function(file,all=F){
     ScoreMatrix.Info <- the_text[(ScoreMatrix.rownum+1):(result.rownum-2)]
     ScoreMatrix.Info <- lapply(ScoreMatrix.Info,function(x){strsplit(x,split = "\t") %>% unlist() %>% as.numeric()})
     ScoreMatrix.df <- Reduce(rbind,ScoreMatrix.Info) %>% data.frame(stringsAsFactors = F)
-    colnames(ScoreMatrix.df) <- treeS.df$id
-    rownames(ScoreMatrix.df) <- treeT.df$id
+    colnames(ScoreMatrix.df) <- treeT.df$id
+    rownames(ScoreMatrix.df) <- treeS.df$id
 
     the_result[["Info"]] <-
       list(treeS=treeS.df,
@@ -79,8 +79,9 @@ readal.almg <- function(file,all=F){
       }
     }
 
+    #"DELTA score between random trees"
 
-    if(startsWith(the_line,"DELTA score between random trees")){
+    if(startsWith(the_line,"PValue")|startsWith(the_line,"DELTA score between random trees")){
 
       the_result[["PValue"]]<-list()
 

@@ -55,8 +55,8 @@ readal.alml<-function(file,all=F){
     ScoreMatrix.Info <- the_text[(ScoreMatrix.rownum+1):(result.rownum-2)]
     ScoreMatrix.Info <- lapply(ScoreMatrix.Info,function(x){strsplit(x,split = "\t") %>% unlist() %>% as.numeric()})
     ScoreMatrix.df <- Reduce(rbind,ScoreMatrix.Info) %>% data.frame(stringsAsFactors = F)
-    colnames(ScoreMatrix.df) <- treeS.df$id
-    rownames(ScoreMatrix.df) <- treeT.df$id
+    colnames(ScoreMatrix.df) <- treeT.df$id
+    rownames(ScoreMatrix.df) <- treeS.df$id
 
     the_result[["Info"]] <-
       list(treeS=treeS.df,
