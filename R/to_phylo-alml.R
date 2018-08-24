@@ -1,12 +1,12 @@
 
 
-alml_to_phylo <- function( alml_list , result.order){
+alml_to_phylo <- function( alml_list , result.order,trace_down_for_pruned=T){
 
   one.result <- alml_list[[ as.character( result.order ) ]]
 
 
-  tree.S <- tr_to_phylo( alml_list, result.order, SorT='S')
-  tree.T <- tr_to_phylo( alml_list, result.order, SorT='T')
+  tree.S <- tr_to_phylo( alml_list, result.order, SorT='S',trace_down_for_pruned=trace_down_for_pruned)
+  tree.T <- tr_to_phylo( alml_list, result.order, SorT='T',trace_down_for_pruned=trace_down_for_pruned)
 
 
   cell.type.treeS <- unique(attr( alml_list,"params")$fileS$Class)
@@ -30,8 +30,8 @@ alml_to_phylo <- function( alml_list , result.order){
 
   names(label.list)<- cell.types.two.tree
 
-  tree.S$tr_df$tip.fill<-label.list[tree.S$tr_df$Class]
-  tree.T$tr_df$tip.fill<-label.list[tree.T$tr_df$Class]
+  tree.S$tr_df$tip.fill<-label.list[unlist(tree.S$tr_df$Class)]
+  tree.T$tr_df$tip.fill<-label.list[unlist(tree.T$tr_df$Class)]
 
 
   result <- list(ori.result = one.result,

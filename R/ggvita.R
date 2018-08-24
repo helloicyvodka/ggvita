@@ -6,17 +6,18 @@
 #'
 #' @param alml_list the variable created from readal
 #' @param result.order the order of result you want to show
+#' @param trace_down_for_pruned default is True. if FALSE, ggvita will not catch the sister terminal cell type for mother of pruned terminal cells.
 #' @param ... same as ggtree parameters (ggtree::ggtree()) ladderize=T
 #' @return a basic tree alignment structure
 #' @export
 
-ggvita <- function(alml_list, result.order,...){
+ggvita <- function(alml_list, result.order,trace_down_for_pruned=T,...){
 
   if(as.numeric(result.order)>length(alml_list))stop("The result order is out of bound! ")
 
   one.result <- alml_list [[ as.character(result.order) ]]
 
-  to.plot <- alml_to_phylo(alml_list,result.order)
+  to.plot <- alml_to_phylo(alml_list,result.order,trace_down_for_pruned=trace_down_for_pruned)
 
 
   ggS <- ggtree::ggtree(to.plot$tree.S$phylo,ladderize=T,...)

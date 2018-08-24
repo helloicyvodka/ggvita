@@ -4,12 +4,14 @@
 \alias{ggvita}
 \title{Show the basic structure of alignment results}
 \usage{
-ggvita(alml_list, result.order, ...)
+ggvita(alml_list, result.order, trace_down_for_pruned = T, ...)
 }
 \arguments{
 \item{alml_list}{the variable created from readal}
 
 \item{result.order}{the order of result you want to show}
+
+\item{trace_down_for_pruned}{default is True. if FALSE, ggvita will not catch the sister terminal cell type for mother of pruned terminal cells.}
 
 \item{...}{same as ggtree parameters (ggtree::ggtree()) ladderize=T}
 }

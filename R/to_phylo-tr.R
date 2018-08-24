@@ -1,6 +1,6 @@
 
 
-tr_to_phylo <- function( alml_list, result.order,SorT){
+tr_to_phylo <- function( alml_list, result.order,SorT,trace_down_for_pruned=T){
 
 
 
@@ -168,11 +168,35 @@ tr_to_phylo <- function( alml_list, result.order,SorT){
 
   file.tree <- attr( alml_list,"params")[[as.character(paste0("file",SorT))]]
 
-  tr_df<-merge(tr_df,file.tree[file.tree$Lineage %in% tr_df$node.seq.ori,],by.x = "node.seq.ori", by.y = "Lineage",all.x=T)
+  tr_df <- merge(tr_df,file.tree[file.tree$Lineage %in% tr_df$node.seq.ori,],by.x = "node.seq.ori", by.y = "Lineage",all.x=T)
 
 
 
   tr_df <- tr_df %>% dplyr::arrange(mp.order)
+
+
+  if(trace_down_for_pruned==T){
+
+    tr_df$Class <- sapply(1:nrow(tr_df),function(x){
+
+      r <- tr_df[x,]
+
+      if(r$isTip==T & is.na(r$Class)){
+
+        r.TerminalCell <- file.tree$Lineage[startsWith(file.tree$Lineage,r$node.seq.ori)]
+
+        r.TerminalCell <- setdiff(r.TerminalCell,tr$prune)
+
+        if(length(r.TerminalCell)==1){
+          as.character(file.tree[file.tree$Lineage==r.TerminalCell,"Class"])
+        }else{stop("Bug in DELTA!")}
+
+      }else{r$Class}
+
+    }) %>% unlist()
+
+
+  }
 
 
 
@@ -183,11 +207,8 @@ tr_to_phylo <- function( alml_list, result.order,SorT){
     r <- tr_df[x,]
 
     if(r$isTip==T){
-      if(is.na(x)==T){
-        y <-NA
-      }else{
+
         y<-r$Class
-      }
 
     }else{y <-NA}
 
