@@ -1,6 +1,5 @@
 
 #' Read in the result of DELTA for analysis
-#' DELTA parameter
 #' @param outfile <Path of DELTA result>. Required.
 #' @param fileS <TreeS file path>. Required.
 #' @param fileT <TreeT file path>. Required.

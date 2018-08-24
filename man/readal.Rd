@@ -2,8 +2,7 @@
 % Please edit documentation in R/readal.R
 \name{readal}
 \alias{readal}
-\title{Read in the result of DELTA for analysis
-DELTA parameter}
+\title{Read in the result of DELTA for analysis}
 \usage{
 readal(outfile, fileS, fileT, cost, method, max.target = NULL, test = NULL,
   all = F, prune = NULL)
@@ -29,5 +28,4 @@ readal(outfile, fileS, fileT, cost, method, max.target = NULL, test = NULL,
 }
 \description{
 Read in the result of DELTA for analysis
-DELTA parameter
 }
