@@ -2,6 +2,7 @@
 #' Renew the incomplete tree leave lineages
 #' @param LeafLin incomplete leave lineages
 #' @return a list inclued both new and past lineages data.frames for all and leaves
+#' @export
 
 ReLin <-
   function(LeafLin) {
