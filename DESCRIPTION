@@ -30,7 +30,8 @@ Imports:
   utils,
   grDevices,
   parallel,
-    RColorBrewer
+    RColorBrewer,
+    gplots
 Suggests:
   knitr,
   testthat,

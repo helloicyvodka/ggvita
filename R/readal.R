@@ -20,13 +20,13 @@ readal<-function(outfile,
                  method,
                  max.target=NULL,
                  test=NULL,
-                 all=NULL,
+                 all=F,
                  prune=NULL
                  ){
 
 
-  if(method=="l")DDD <- readal.alml(outfile)
-  if(method=='g')DDD <- readal.almg(outfile)
+  if(method=="l")DDD <- readal.alml(outfile,all=all)
+  if(method=='g')DDD <- readal.almg(outfile,all=all)
 
    attr(DDD,"params") <- list(
                       outfile=outfile,

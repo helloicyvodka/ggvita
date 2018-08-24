@@ -7,7 +7,7 @@
 ggvita(alml_list, result.order, trace_down_for_pruned = T, ...)
 }
 \arguments{
-\item{alml_list}{the variable created from readal}
+\item{alml_list}{the object read from readal}
 
 \item{result.order}{the order of result you want to show}
 

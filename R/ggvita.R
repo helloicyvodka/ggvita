@@ -4,7 +4,7 @@
 
 #' Show the basic structure of alignment results
 #'
-#' @param alml_list the variable created from readal
+#' @param alml_list the object read from readal
 #' @param result.order the order of result you want to show
 #' @param trace_down_for_pruned default is True. if FALSE, ggvita will not catch the sister terminal cell type for mother of pruned terminal cells.
 #' @param ... same as ggtree parameters (ggtree::ggtree()) ladderize=T
