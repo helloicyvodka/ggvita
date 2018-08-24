@@ -9,6 +9,7 @@
 #'@param outfile: output file path. default: TreeS file path + l or g, based on -method
 #'@param all: T or F. output as much information as possible. default F;
 #'@param prune: pruneScore is the punish for pruning one leaf. default 1
+#'@export
 
 
 DELTA <- function(treeS,
