@@ -81,7 +81,7 @@ readal.almg <- function(file,all=F){
 
     #"DELTA score between random trees"
 
-    if(startsWith(the_line,"PValue")|startsWith(the_line,"DELTA score between random trees")){
+    if(startsWith(the_line,"DELTA score between random trees")){
 
       the_result[["PValue"]]<-list()
 
