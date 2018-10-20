@@ -183,12 +183,21 @@ tr_to_phylo <- function( alml_list, result.order,SorT,trace_down_for_pruned=T){
 
       if(r$isTip==T & is.na(r$Class)){
 
-        r.TerminalCell <- file.tree$Lineage[startsWith(file.tree$Lineage,r$node.seq.ori)]
+        r.TerminalCell <- file.tree$Lineage[startsWith(file.tree$Lineage,
+                                                       prefix=r$node.seq.ori)]
 
-        r.TerminalCell <- setdiff(r.TerminalCell,tr$prune)
+        r.prune <- tr$prune[startsWith(tr$prune,
+                                       prefix=r$node.seq.ori)]
+
+        r.prune <- sapply(r.prune,function(x)r.TerminalCell[startsWith(r.TerminalCell,prefix = x)]) %>% unlist() %>% as.character()
+
+        r.TerminalCell <- setdiff(r.TerminalCell,r.prune)
+
 
         if(length(r.TerminalCell)==1){
+
           as.character(file.tree[file.tree$Lineage==r.TerminalCell,"Class"])
+
         }else{stop("Bug in DELTA!")}
 
       }else{r$Class}
@@ -258,3 +267,4 @@ tr_to_phylo <- function( alml_list, result.order,SorT,trace_down_for_pruned=T){
                tr_df = tr_df ))
 
 }
+
