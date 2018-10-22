@@ -120,6 +120,9 @@ ReLin <-
                           NewAllLin=c(InternalList %>% rlist::list.mapv(.[2]),Leaf.df$NewLeafLin),
                           stringsAsFactors = F)
 
+    All.df$AllLin[All.df$AllLin==""]  <- "Root"
+    All.df$NewAllLin[All.df$NewAllLin==""]  <- "Root"
+
 
     if(UseSubRoot==F){
 
@@ -134,7 +137,9 @@ ReLin <-
     }
 
 
-    return(list(All=All.df,Leaf=Leaf.df,NewAllLin=the.all.tree %>% rlist::list.mapv(.[2]) %>% unique()))
+    return(list(All=All.df,
+                Leaf=Leaf.df,
+                NewAllLin=All.df$NewAllLin %>% unique()))
   }
 
 
