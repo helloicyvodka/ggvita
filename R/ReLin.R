@@ -114,13 +114,11 @@ ReLin <-
 
     Leaf.df <- data.frame(LeafLin=LeafLin,NewLeafLin=NewLeafLin,stringsAsFactors = F)
 
-    # InternalList <- setdiff(the.all.tree,the.growing.tree)
+    InternalList <- setdiff(the.all.tree,the.growing.tree)
 
-    # All.df  <- data.frame(AllLin=c(InternalList %>% rlist::list.mapv(.[1]),Leaf.df$LeafLin),
-    #                       NewAllLin=c(InternalList %>% rlist::list.mapv(.[2]),Leaf.df$NewLeafLin),
-    #                       stringsAsFactors = F)
-
-     All.df <- data.frame(NewAllLin=the.all.tree %>% rlist::list.mapv(.[2]) %>% unique(),stringsAsFactors = F)
+    All.df  <- data.frame(AllLin=c(InternalList %>% rlist::list.mapv(.[1]),Leaf.df$LeafLin),
+                          NewAllLin=c(InternalList %>% rlist::list.mapv(.[2]),Leaf.df$NewLeafLin),
+                          stringsAsFactors = F)
 
 
     if(UseSubRoot==F){
@@ -136,7 +134,7 @@ ReLin <-
     }
 
 
-    return(list(All=All.df,Leaf=Leaf.df))
+    return(list(All=All.df,Leaf=Leaf.df,NewAllLin=the.all.tree %>% rlist::list.mapv(.[2]) %>% unique()))
   }
 
 
