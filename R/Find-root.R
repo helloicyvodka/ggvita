@@ -11,7 +11,7 @@ Find.root <- function(allLin){
 
   if(allLin[allLin %in% the.ava.roots] %>% length()  >1){
 
-    stop("The lineage sequence includes abnormal roots!")
+    stop("The lineage sequence includes more than one abnormal roots!")
   }
 
   if("Root" %in% allLin){

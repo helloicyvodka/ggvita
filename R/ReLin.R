@@ -5,9 +5,13 @@
 #' @export
 
 ReLin <-
-  function(LeafLin) {
+  function(LeafLin,UseSubRoot=T) {
 
-    if((intersect(LeafLin,LeafLin %>% substr(1,nchar(.)-1)) %>% length() )!=0)
+    LeafLin <- as.character(LeafLin)
+
+    if(length(LeafLin)==1)return(list(All=c(""),Leaf=c("")))
+
+    if( (intersect(LeafLin,LeafLin %>% substr(1,nchar(.)-1)) %>% length())!=0)
       stop("Not all leaves!")
 
     Find.root.from.Leaves <- function(LeafLin){
@@ -27,12 +31,12 @@ ReLin <-
       }
     }
 
-
-    LeafLin <- as.character(LeafLin)
     the.root <- Find.root.from.Leaves(LeafLin)
+
+    # tree grow from the real sub root
+
     the.growing.tree <- list(c(the.root, the.root))
     the.all.tree  <- the.growing.tree
-
     PreNum <- length(LeafLin)
 
 
@@ -57,6 +61,7 @@ ReLin <-
           startsWith(LeafLin, prefix = .) %>%
           `[`(. == T) %>%
           length()
+
         if (ttt.0 == 0) {
           if (ttt.1 == 0)
             return(list(c(x[1], x[2])))
@@ -83,8 +88,6 @@ ReLin <-
     }
 
 
-
-
     # Leaf
 
     NewLeafList <- rlist::list.map(the.growing.tree, .[2])
@@ -92,36 +95,46 @@ ReLin <-
     names(NewLeafList) <- rlist::list.mapv(the.growing.tree, .[1])
 
     NewLeafLin <-
-      sapply(LeafLin, function(x)as.character(NewLeafList[[x]])) %>%
-      as.character()
+      sapply(LeafLin, function(x){
+
+        m <- sapply(names(NewLeafList),function(xx){
+
+          if(startsWith(x,prefix = xx)==T){
+
+            return(nchar(xx))
+          }else{return(0)}
+
+        },USE.NAMES = F)
+
+        as.character(NewLeafList[[which(m==max(m))]])
+
+        },USE.NAMES = F)
+
+    #NewLeafLin <- sapply(NewLeafLin,function(x)paste0(the.root,x))
 
     Leaf.df <- data.frame(LeafLin=LeafLin,NewLeafLin=NewLeafLin,stringsAsFactors = F)
 
+    # InternalList <- setdiff(the.all.tree,the.growing.tree)
 
-    # All
+    # All.df  <- data.frame(AllLin=c(InternalList %>% rlist::list.mapv(.[1]),Leaf.df$LeafLin),
+    #                       NewAllLin=c(InternalList %>% rlist::list.mapv(.[2]),Leaf.df$NewLeafLin),
+    #                       stringsAsFactors = F)
 
-    Test <- sapply(the.all.tree,function(x){x[1]==""} )
+     All.df <- data.frame(NewAllLin=the.all.tree %>% rlist::list.mapv(.[2]) %>% unique(),stringsAsFactors = F)
 
-    if(any(Test)){
 
-      the.all.tree[[which(Test ==T)]] <- c("Root","Root")
+    if(UseSubRoot==F){
+
+      All.df$NewAllLin <-  sub(pattern = the.root,
+                               replacement = "",
+                               All.df$NewAllLin)
+
+      Leaf.df$NewLeafLin <- sub(pattern = the.root,
+                                replacement = "",
+                                Leaf.df$NewLeafLin)
 
     }
 
-
-
-    AllLin <- rlist::list.mapv(the.all.tree, .[1]) %>% as.character()
-
-    NewAllList <- rlist::list.map(the.all.tree, .[2])
-
-    names(NewAllList) <- AllLin
-
-    NewAllLin <-
-      sapply(AllLin, function(x)
-        as.character(NewAllList[[x]])) %>% as.character()
-
-
-    All.df  <- data.frame(AllLin=AllLin,NewAllLin=NewAllLin, stringsAsFactors = F)
 
     return(list(All=All.df,Leaf=Leaf.df))
   }

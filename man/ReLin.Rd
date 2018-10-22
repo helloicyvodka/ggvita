@@ -4,7 +4,7 @@
 \alias{ReLin}
 \title{Renew the incomplete tree leave lineages}
 \usage{
-ReLin(LeafLin)
+ReLin(LeafLin, UseSubRoot = T)
 }
 \arguments{
 \item{LeafLin}{incomplete leave lineages}
