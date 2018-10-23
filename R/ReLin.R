@@ -5,7 +5,7 @@
 #' @export
 
 ReLin <-
-  function(LeafLin,UseSubRoot=T) {
+  function(LeafLin,UseSubRoot=F) {
 
     LeafLin <- as.character(LeafLin)
 
