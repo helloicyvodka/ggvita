@@ -1,6 +1,7 @@
 
 #' Renew the incomplete tree leave lineages
 #' @param LeafLin incomplete leave lineages
+#' @param UseSubRoot New lineage starts from the true root or sub tree root
 #' @return a list inclued both new and past lineages data.frames for all and leaves
 #' @export
 

@@ -1,7 +1,3 @@
-
-
-
-
 #' Show the basic structure of alignment results
 #'
 #' @param alml_list the object read from readal
@@ -11,11 +7,33 @@
 #' @return a basic tree alignment structure
 #' @export
 
-ggvita <- function(alml_list, result.order,trace_down_for_pruned=T,...){
+ggvita <- function(alml_list,result.order,trace_down_for_pruned=T,...){
+
+
+  # bug fixing
+  if (attr(alml_list,'params')$method=="g"){
+
+    result.order <- 1
+
+    alml_list2 <- list("1"=alml_list)
+
+    attr(alml_list2,"params") <- attr(alml_list,"params")
+
+    if(!is.null(alml_list[["Info"]])){
+      alml_list2$Info <- alml_list[["Info"]]
+    }
+
+    class(alml_list2) <- class(alml_list)
+
+    alml_list <- alml_list2
+
+  }
 
   if(as.numeric(result.order)>length(alml_list))stop("The result order is out of bound! ")
 
+
   one.result <- alml_list [[ as.character(result.order) ]]
+
 
   to.plot <- alml_to_phylo(alml_list,result.order,trace_down_for_pruned=trace_down_for_pruned)
 
@@ -95,13 +113,6 @@ ggvita <- function(alml_list, result.order,trace_down_for_pruned=T,...){
 
 
 }
-
-
-
-
-
-
-
 
 
 

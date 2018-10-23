@@ -22,7 +22,8 @@ readal.almg <- function(file,all=F){
 
   result.rownum <- min(which(startsWith(the_text,"Score:")))
 
-  if(all==T){
+  all <- as.character(all)
+  if(all=="T"){
 
     treeS.rownum <- which(startsWith(the_text,"treeS"))
     treeT.rownum <- which(startsWith(the_text,"treeT"))
@@ -102,7 +103,7 @@ readal.almg <- function(file,all=F){
     }
   }
 
-
+  #class(the_result) <- c("almg_list",class(the_result))
 
   the_result
 

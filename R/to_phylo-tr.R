@@ -28,7 +28,7 @@ tr_to_phylo <- function( alml_list, result.order,SorT,trace_down_for_pruned=T){
   c(tr_df$node.seq.ori,
     tr_df$node.seq.ori %>% Find.missed.mother()) %>%
     Find.tips() %>%
-    ReLin %>%
+    ReLin(UseSubRoot = T) %>%
     `$`(All)
 
   colnames(NewAll.df) <- c("node.seq","node.seq.ReLin")

@@ -4,10 +4,12 @@
 \alias{ReLin}
 \title{Renew the incomplete tree leave lineages}
 \usage{
-ReLin(LeafLin, UseSubRoot = T)
+ReLin(LeafLin, UseSubRoot = F)
 }
 \arguments{
 \item{LeafLin}{incomplete leave lineages}
+
+\item{UseSubRoot}{New lineage starts from the true root or sub tree root}
 }
 \value{
 a list inclued both new and past lineages data.frames for all and leaves
