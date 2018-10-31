@@ -3,8 +3,6 @@
 tr_to_phylo <- function( alml_list, result.order,SorT,trace_down_for_pruned=T){
 
 
-
-
   one.result <- alml_list[[ as.character( result.order ) ]]
 
   tr.root <- one.result [[ paste0("Root",SorT)]]
@@ -203,6 +201,35 @@ tr_to_phylo <- function( alml_list, result.order,SorT,trace_down_for_pruned=T){
       }else{r$Class}
 
     }) %>% unlist()
+
+
+    tr_df$Name <- sapply(1:nrow(tr_df),function(x){
+
+      r <- tr_df[x,]
+
+      if(r$isTip==T & is.na(r$Name)){
+
+        r.TerminalCell <- file.tree$Lineage[startsWith(file.tree$Lineage,
+                                                       prefix=r$node.seq.ori)]
+
+        r.prune <- tr$prune[startsWith(tr$prune,
+                                       prefix=r$node.seq.ori)]
+
+        r.prune <- sapply(r.prune,function(x)r.TerminalCell[startsWith(r.TerminalCell,prefix = x)]) %>% unlist() %>% as.character()
+
+        r.TerminalCell <- setdiff(r.TerminalCell,r.prune)
+
+
+        if(length(r.TerminalCell)==1){
+
+          as.character(file.tree[file.tree$Lineage==r.TerminalCell,"Name"])
+
+        }else{stop("Bug in DELTA!")}
+
+      }else{r$Name}
+
+    }) %>% unlist()
+
 
 
   }
