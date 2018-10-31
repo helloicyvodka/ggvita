@@ -28,7 +28,7 @@ readal.alml<-function(file,all=F){
   result.rownum <- min(which(startsWith(the_text,"1{")))
 
   all <- as.character(all)
-  if(all=="T"){
+  if(all=="T"|all=="TRUE"){
 
     treeS.rownum <- which(startsWith(the_text,"treeS"))
     treeT.rownum <- which(startsWith(the_text,"treeT"))
