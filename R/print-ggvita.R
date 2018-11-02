@@ -2,7 +2,7 @@
 #' Print ggvita objects
 #'@export
 
-print.ggvita <- function(i){
+print.ggvita <- function(i,show.legend=T){
 
   p <-
     cowplot::plot_grid(
@@ -10,7 +10,12 @@ print.ggvita <- function(i){
       i$plot$ggT+ggplot2::coord_flip(),
       ncol=1)
 
-  pp <- cowplot::plot_grid(p,i$plot$Legend,nrow=1,rel_widths = c(10,1))
+
+  if(show.legend==T){
+    pp <- cowplot::plot_grid(p,i$plot$Legend,nrow=1,rel_widths = c(10,1))
+  }else{
+    pp <- p
+  }
   print(pp)
 
 }
