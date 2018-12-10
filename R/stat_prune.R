@@ -56,6 +56,8 @@ cal_prune <- function(data){
 
 
     dt <- merge(pr.df,data,by="node.seq",all.x=T)
+
+
     tip.size <- nrow(tr)
 
 
@@ -66,12 +68,31 @@ cal_prune <- function(data){
 
     })
 
+
+
     dt$pr.num <- sapply(1:nrow(dt),function(x){
       r <- dt[x,]
       dtt <- dt[dt$node==r$node,]
       sum(dtt$pr.num)
 
     })
+
+
+    dt$x<- sapply(1:nrow(dt),function(x){
+
+      r <- dt[x,]
+      data[data$node==r$node,'x']
+
+    })
+
+    dt$y<- sapply(1:nrow(dt),function(x){
+
+      r <- dt[x,]
+      data[data$node==r$node,'y']
+
+    })
+
+    dt$isTip <- FALSE
 
     return(dt)
 
