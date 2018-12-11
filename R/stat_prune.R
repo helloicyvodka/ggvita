@@ -58,7 +58,11 @@ cal_prune <- function(data){
     dt <- merge(pr.df,data,by="node.seq",all.x=T)
 
 
-    tip.size <- nrow(tr)
+    tip.size <-
+      data %>%
+      dplyr::filter(isTip==T) %>%
+      dplyr::select(node) %>%
+      max()
 
 
     dt$node <- sapply(1:nrow(dt),function(x){
