@@ -54,6 +54,7 @@ the_LN_2_trueLN <- function(x,Root.style="Root") {
     "K",
     "M",
     "MS",
+    "Ms",
     "P0",
     "P1",
     "P10",
@@ -112,6 +113,7 @@ the_LN_2_trueLN <- function(x,Root.style="Root") {
     "Zaarpppaap",
     "Zaplpapppaa",
     "Zpaaapaapp",
+    "Zpaa",
     "Zpaa",
     "Z",
     "Zp",#P1(CXL:"Zaplapaapp"->YM:"Zp")
