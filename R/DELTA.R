@@ -21,7 +21,27 @@ DELTA <- function(treeS,
                   test=0,
                   all="F",
                   prune=1,
-                  DELTA.address){
+                  DELTA.address=NULL){
+
+  if(is.null(DELTA.address)){
+
+    DELTA.address <- grep("ggvita",list.files(.libPaths(),full.names = T,all.files = T),value = T)
+
+    if(length(DELTA.address)!=0){
+
+      DELTA.address <- paste0(DELTA.address,"/DELTA/DELTA")
+
+    }else{
+
+      stop("Please find the DELTA bin file from ggvita package address and specific its address to the DELTA.address!")
+    }
+
+  }else{
+
+    stop("Please find the DELTA bin file from ggvita package address and specific its address to the DELTA.address!")
+  }
+
+
 
   system(paste0(DELTA.address,
                 " ",

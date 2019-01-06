@@ -4,7 +4,7 @@
 \alias{print.ggvita}
 \title{Print ggvita objects}
 \usage{
-\method{print}{ggvita}(i)
+\method{print}{ggvita}(i, show.legend = T)
 }
 \description{
 Print ggvita objects

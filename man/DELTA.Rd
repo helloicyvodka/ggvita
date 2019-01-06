@@ -5,7 +5,7 @@
 \title{Calculate DELTA score}
 \usage{
 DELTA(treeS, treeT, cost, outfile = "./", method = "g", max_target = 1,
-  test = 0, all = "F", prune = 1, DELTA.address)
+  test = 0, all = "F", prune = 1, DELTA.address = NULL)
 }
 \arguments{
 \item{treeS:}{TreeS file path.(required)}
