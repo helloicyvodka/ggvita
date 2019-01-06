@@ -30,6 +30,7 @@ DELTA <- function(treeS,
     if(length(DELTA.address)!=0){
 
       DELTA.address <- paste0(DELTA.address,"/data/DELTA")
+      system(paste0("chmod 755 ",DELTA.address))
 
     }else{
 
