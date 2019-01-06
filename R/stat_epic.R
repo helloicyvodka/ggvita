@@ -75,6 +75,7 @@ cal_EPIC<-function(data,expr_file,mc.cores=1){
   epic.df <- readal.epic(expr_file,mc.cores=mc.cores)
 
 
+
   tr.prune <- attr(data,"prune")
 
   tr.prune.sister <- c()
@@ -105,7 +106,7 @@ cal_EPIC<-function(data,expr_file,mc.cores=1){
     pr.df$final.parent <- sapply(tr.prune.sister,function(x){
 
 
-      if(!(x %in% tr.root)){
+      #if(!(x %in% tr.root)){
 
         repeat{
 
@@ -127,7 +128,7 @@ cal_EPIC<-function(data,expr_file,mc.cores=1){
 
         }
 
-      }
+      #}
 
 
       x
