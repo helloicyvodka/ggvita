@@ -18,20 +18,20 @@ License: Artistic-2.0
 Encoding: UTF-8
 LazyData: TRUE  
 Imports:
-  ggplot2,
+  ggplot2(>= 3.1.0),
   ggtree(>= 1.15.0),
-  data.table,
+  data.table(>= 1.11.8),
   dplyr(>= 0.7.6) ,
-  magrittr , 
+  magrittr(>= 1.5) , 
   plyr(>= 1.8.4),
-  rlist,
-  cowplot,
-  readr,
-  utils,
-  grDevices,
-  parallel,
-    RColorBrewer,
-    gplots
+  rlist(>= 0.4.6.1),
+  cowplot(>= 0.9.3),
+  readr(>= 1.2.1),
+  utils(>= 3.4.0),
+  grDevices(>= 3.5.0),
+  parallel(>= 3.5.0),
+  RColorBrewer(>= 1.1-2),
+  gplots(>= 3.0.1)
 Suggests:
   knitr,
   testthat,
