@@ -19,7 +19,7 @@ Encoding: UTF-8
 LazyData: TRUE  
 Imports:
   ggplot2,
-  ggtree,
+  ggtree(>= 1.15.0),
   data.table,
   dplyr(>= 0.7.6) ,
   magrittr , 
