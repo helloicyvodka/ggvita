@@ -29,7 +29,7 @@ DELTA <- function(treeS,
 
     if(length(DELTA.address)!=0){
 
-      DELTA.address <- paste0(DELTA.address,"/DELTA/DELTA")
+      DELTA.address <- paste0(DELTA.address,"/data/DELTA/DELTA")
 
     }else{
 
