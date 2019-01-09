@@ -37,11 +37,7 @@ DELTA <- function(treeS,
       stop("Please find the DELTA bin file from ggvita package address and specific its address to the DELTA.address!")
     }
 
-  }else{
-
-    stop("Please find the DELTA bin file from ggvita package address and specific its address to the DELTA.address!")
   }
-
 
 
   system(paste0(DELTA.address,
